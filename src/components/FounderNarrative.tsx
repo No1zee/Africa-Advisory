@@ -35,7 +35,7 @@ export const FounderNarrative = () => {
               <div className="absolute inset-0 bg-jade/10 mix-blend-overlay" />
               {/* Brushed metal texture overlay */}
               <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/brushed-alum.png')]" />
-              <div className="absolute inset-x-0 bottom-0 p-12 bg-gradient-to-t from-base-obsidian via-base-obsidian/40 to-transparent">
+              <div className="absolute inset-x-0 bottom-0 p-8 md:p-12 bg-gradient-to-t from-base-obsidian via-base-obsidian/40 to-transparent">
                 <Display as="h3" className="text-secondary-parchment text-4xl mb-2">Bruce Jewels</Display>
                 <Label className="text-jade font-semibold tracking-widest uppercase text-[0.6rem]">Principal & Founder</Label>
               </div>
@@ -110,7 +110,7 @@ export const FounderNarrative = () => {
                 </Body>
               </motion.div>
 
-              <div className="pt-12 grid grid-cols-2 gap-12 border-t border-base-obsidian/10">
+              <div className="pt-12 grid grid-cols-2 gap-8 md:gap-12 border-t border-base-obsidian/10">
                 <motion.div variants={VARIANTS.RISE_REVEAL}>
                   <Tabular className="text-4xl text-gold">40+</Tabular>
                   <Label className="block mt-2 opacity-50 uppercase tracking-widest text-jade">Years Advisory</Label>

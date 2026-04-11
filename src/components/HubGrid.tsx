@@ -111,7 +111,7 @@ export const HubGrid = () => {
           
           {/* Capital Bridge Cell */}
           <motion.div 
-            className="md:col-span-12 liquid-glass-gold rounded-sm p-10 flex flex-col lg:flex-row justify-between lg:items-center gap-10"
+            className="md:col-span-12 liquid-glass-gold rounded-sm p-6 md:p-10 flex flex-col lg:flex-row justify-between lg:items-center gap-6 lg:gap-10"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
           >
