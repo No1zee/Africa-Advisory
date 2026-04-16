@@ -168,7 +168,7 @@ export const Hero = () => {
             </motion.div>
 
             {/* Stage 1: Keywords using Pretext for S-tier rendering */}
-            <div className="flex flex-col md:flex-row items-center justify-center gap-y-10 md:gap-x-10 mb-20 w-full px-4 overflow-visible">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-y-10 md:gap-x-6 mb-20 w-full max-w-5xl mx-auto px-4 overflow-visible">
               {[
                 { text: "Simple.", weight: 900, num: "01" },
                 { text: "Practical.", weight: 600, num: "02" },
