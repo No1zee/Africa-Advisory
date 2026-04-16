@@ -9,6 +9,15 @@
   --accent-gold: 38 49% 47%; /* #b68a3d */
   --accent-soil: 29 29% 22%; /* #4a3728 */
   --accent-foreground: 33 22% 92%;
+
+  /* Consolidated Readability Tokens */
+  --text-primary: rgba(255, 255, 255, 0.92);
+  --text-secondary: rgba(255, 255, 255, 0.70);
+  --text-muted: rgba(255, 255, 255, 0.40);
+  --brand-teal: #2D8C7A;
+  --brand-gold: #C9A96E;
+  --bg-dark: #0D1212;
+  --bg-card: rgba(255, 255, 255, 0.04);
   
   /* briefing-mode transition */
 .briefing-mode {
@@ -86,7 +95,7 @@ html {
 
 body {
   background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
+  color: var(--text-primary);
   font-family: var(--font-body);
   font-weight: 300;
   line-height: 1.6;
@@ -164,11 +173,12 @@ h1 { font-size: clamp(2.5rem, 10vw, 8rem); }
 h2 { font-size: clamp(2rem, 6vw, 4.5rem); }
 h3 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
 
-p {
+p, li, td {
   font-size: 1.125rem;
   margin-bottom: 1.5rem;
   font-weight: 300;
-  color: hsla(var(--foreground), 0.85);
+  color: var(--text-secondary);
+  line-height: 1.75;
 }
 
 /* Layout Utilities */
@@ -538,3 +548,19 @@ p {
   background: radial-gradient(circle at center, hsla(var(--accent), 0.3) 0%, transparent 70%);
   filter: blur(40px);
 }
+
+/* Redability Audit Enhancements */
+.eyebrow {
+  color: var(--brand-teal);
+  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.body-uppercase-fix {
+  text-transform: none !important;
+  letter-spacing: 0.01em;
+}
+
+.text-brand-teal { color: var(--brand-teal); }
+.text-brand-gold { color: var(--brand-gold); }

@@ -1,9 +1,15 @@
 "use client";
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Display, Label, Tabular, Body } from './Typography';
-import { VARIANTS } from './Motion';
+import { Display, Label, Tabular, Body, Sovereign } from './Typography';
+import { VARIANTS, TRANSITIONS } from './Motion';
+import { SpotlightBackground } from './SpotlightBackground';
+import { useGSAP } from '@gsap/react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const MANDATES = [
   {
@@ -11,100 +17,113 @@ const MANDATES = [
     sector: "Energy & Infrastructure",
     geography: "West Africa",
     outcome: "Sovereign debt restructuring and emergency capital injection for state utility.",
-    year: "2024"
+    year: "2024",
+    image: "/assets/spotlight-1.png"
   },
   {
     size: "$820M",
     sector: "Transport & Logistics",
     geography: "East Africa",
     outcome: "Financial close on Public-Private Partnership for regional rail corridor.",
-    year: "2023"
+    year: "2023",
+    image: "/assets/spotlight-2.png"
   },
   {
     size: "$450M",
     sector: "Commodities & Trade",
     geography: "Multi-Regional",
     outcome: "Structured cross-border trade finance facility for agricultural exports.",
-    year: "2024"
+    year: "2024",
+    image: "/assets/spotlight-3.png"
   },
   {
     size: "$150M",
     sector: "ICT & Digital",
     geography: "Pan-African",
     outcome: "Debt financing for rapid deployment of high-speed telecommunications infrastructure.",
-    year: "2023"
+    year: "2023",
+    image: "/assets/hero-bg.png" // Fallback to existing asset
   }
 ];
 
 export const SelectedMandates = () => {
-  return (
-    <section id="mandates" className="section bg-background overflow-hidden relative py-32 lg:py-48">
-      <div className="container relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-baseline mb-16 gap-4">
-          <div className="max-w-xl">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <Label className="text-jade mb-4 tracking-[0.3em] uppercase">Selected Mandates</Label>
-              <Display as="h2" className="text-4xl md:text-6xl mb-6">
-                Institutional Proof. <br />
-                <span className="italic text-foreground/40">Verifiable Outcomes.</span>
-              </Display>
-            </motion.div>
-          </div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="md:text-right"
-          >
-            <Body className="text-sm text-foreground/40 max-w-sm">
-              Directorial summaries of recent strategic advisory and capital facilitation mandates across the continent.
-              <span className="block mt-4 text-[0.6rem] opacity-50 italic">
-                Representative transactions shown in summary form due to confidentiality constraints.
-              </span>
-            </Body>
-          </motion.div>
-        </div>
+  const containerRef = useRef<HTMLDivElement>(null);
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-foreground/5 border border-foreground/5">
-          {MANDATES.map((mandate, i) => (
+  useGSAP(() => {
+    const sections = gsap.utils.toArray('.mandate-session');
+    
+    sections.forEach((section: any, i) => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top center",
+        onEnter: () => gsap.to(section, { opacity: 1, duration: 1 }),
+        onLeaveBack: () => gsap.to(section, { opacity: 0.3, duration: 1 }),
+      });
+    });
+  }, { scope: containerRef });
+
+  return (
+    <section id="mandates" ref={containerRef} className="bg-base-obsidian relative">
+      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center pointer-events-none z-20">
+        <div className="container px-6 text-center">
+            <Label className="text-brand-teal mb-4 uppercase tracking-[0.3em] font-semibold">Strategic Outcomes</Label>
+            <Display className="text-3xl md:text-5xl lg:text-7xl text-secondary-parchment transition-all duration-700">
+                Africa Advisory is widely known as Africa's Dealmaker
+            </Display>
             <motion.div 
-              key={i}
-              className="bg-background p-8 flex flex-col justify-between group hover:bg-surface-dark transition-all duration-500"
-              variants={VARIANTS.RISE_REVEAL}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-            >
-              <div>
-                <Tabular className="text-3xl text-gold mb-6 group-hover:scale-110 transition-transform origin-left">
-                  {mandate.size}
-                </Tabular>
-                <div className="flex flex-col gap-1 mb-10">
-                  <Label className="text-[0.6rem] text-jade tracking-widest uppercase mb-1">{mandate.sector}</Label>
-                  <Label className="text-[0.5rem] opacity-40 uppercase tracking-widest">{mandate.geography}</Label>
-                </div>
-                <p className="text-sm text-foreground/80 leading-relaxed font-body font-light">
-                  {mandate.outcome}
-                </p>
-              </div>
-              
-            </motion.div>
-          ))}
+              initial={{ width: 0 }}
+              whileInView={{ width: 120 }}
+              transition={{ duration: 1, delay: 0.5 }}
+              className="h-[1px] bg-brand-teal/40 mx-auto mt-12"
+            />
         </div>
-        
-        {/* Decorative Grid Trace */}
-        <div className="absolute inset-0 pointer-events-none opacity-[0.02]">
-          <div className="grid grid-cols-4 h-full w-full">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="border-r border-foreground h-full" />
-            ))}
+      </div>
+
+      {MANDATES.map((mandate, i) => (
+        <div 
+          key={i} 
+          className="mandate-session relative min-h-screen flex items-center justify-center overflow-hidden border-t border-white/5"
+        >
+          <SpotlightBackground 
+            image={mandate.image} 
+            active={true} 
+            opacity={0.2}
+            blur={10}
+          />
+          
+          <div className="container relative z-10 px-6 grid grid-cols-12 gap-8">
+            <div className="col-span-12 md:col-start-3 md:col-span-8 lg:col-start-4 lg:col-span-6 flex flex-col items-center text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ margin: "-20%" }}
+                transition={TRANSITIONS.EXQUISITE}
+              >
+                <div className="mb-8 flex flex-col items-center">
+                    <Tabular className="text-5xl md:text-7xl lg:text-9xl text-gold mb-2 [text-shadow:0_4px_12px_rgba(0,0,0,0.8)]">
+                        {mandate.size}
+                    </Tabular>
+                    <Sovereign className="text-brand-teal tracking-[0.5em] [text-shadow:0_1px_8px_rgba(0,0,0,0.8)]">{mandate.sector}</Sovereign>
+                </div>
+                
+                <Body className="text-lg md:text-xl lg:text-2xl text-secondary-parchment/90 mb-10 leading-relaxed max-w-2xl">
+                  {mandate.outcome}
+                </Body>
+
+                <div className="flex items-center justify-center gap-6 opacity-40">
+                    <Label>{mandate.geography}</Label>
+                    <div className="w-1 h-1 bg-jade rounded-full" />
+                    <Label>{mandate.year}</Label>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
+      ))}
+
+      {/* Rhythmic Closer */}
+      <div className="h-[50vh] flex items-center justify-center bg-gradient-to-b from-transparent to-base-obsidian">
+          <Label className="opacity-20 italic">End of Briefing: Mandates</Label>
       </div>
     </section>
   );

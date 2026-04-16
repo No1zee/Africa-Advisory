@@ -60,8 +60,24 @@ export const PretextHaloHeading: React.FC<Props> = ({
       const ctx = canvasRef.current.getContext('2d');
       if (!ctx) return;
 
+      // RESOLVE COLORS: Canvas doesn't understand var()
+      const resolveColor = (colorStr: string) => {
+        if (colorStr.includes('var(')) {
+          // Create a dummy element to resolve CSS variable
+          const dummy = document.createElement('div');
+          dummy.style.color = colorStr;
+          document.body.appendChild(dummy);
+          const resolved = window.getComputedStyle(dummy).color;
+          document.body.removeChild(dummy);
+          return resolved;
+        }
+        return colorStr;
+      };
+
+      const activeTextColor = resolveColor(textColor);
+      const activeHaloColor = resolveColor(haloColor);
+
       // RESOLVE FONT: Canvas doesn't support 'clamp()' or 'vw' units in ctx.font
-      // We resolve it by setting the font on a hidden parent and reading the computed style
       containerRef.current.style.font = font;
       const computedStyle = window.getComputedStyle(containerRef.current);
       const activeFont = computedStyle.font || font;
@@ -69,15 +85,32 @@ export const PretextHaloHeading: React.FC<Props> = ({
       const activeLineHeight = propLineHeight || activeFontSize * 1.2;
 
       const dpr = window.devicePixelRatio || 1;
-      const effectiveMaxWidth = propMaxWidth ? Math.min(propMaxWidth, measuredWidth) : measuredWidth;
+      // For display keywords, we want to AVOID wrapping. 
+      // We'll use a very large maxWidth unless propMaxWidth is explicitly small.
+      const effectiveMaxWidth = propMaxWidth || 2000; 
 
       const prepared = prepareWithSegments(text, activeFont);
       const { lines, height } = layoutWithLines(prepared, effectiveMaxWidth, activeLineHeight);
 
-      canvasRef.current.width = effectiveMaxWidth * dpr;
-      canvasRef.current.height = height * dpr;
-      canvasRef.current.style.width = `${effectiveMaxWidth}px`;
-      canvasRef.current.style.height = `${height}px`;
+      // Find the actual widest line to avoid canvas being too wide
+      const ctxMeasure = canvasRef.current.getContext('2d');
+      let actualMaxWidth = 0;
+      if (ctxMeasure) {
+        ctxMeasure.font = activeFont;
+        lines.forEach(line => {
+          actualMaxWidth = Math.max(actualMaxWidth, ctxMeasure.measureText(line.text).width);
+        });
+      }
+      const finalWidth = Math.min(effectiveMaxWidth, actualMaxWidth + 20); // Add small padding
+
+      const blurPadding = 120; // Enough space for shadowBlur = 100
+      const canvasWidth = finalWidth + (blurPadding * 2);
+      const canvasHeight = height + (blurPadding * 2);
+
+      canvasRef.current.width = canvasWidth * dpr;
+      canvasRef.current.height = canvasHeight * dpr;
+      canvasRef.current.style.width = `${canvasWidth}px`;
+      canvasRef.current.style.height = `${canvasHeight}px`;
 
       ctx.scale(dpr, dpr);
       ctx.font = activeFont;
@@ -88,24 +121,22 @@ export const PretextHaloHeading: React.FC<Props> = ({
         (ctx as any).letterSpacing = `${letterSpacing}px`;
       }
 
-      ctx.clearRect(0, 0, effectiveMaxWidth, height);
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-      // Render Halo
-      ctx.shadowBlur = 40;
-      ctx.shadowColor = haloColor;
-      ctx.fillStyle = haloColor; 
+      // Render Halo (Atmospheric Glow)
+      ctx.shadowBlur = 100;
+      ctx.shadowColor = activeHaloColor;
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.01)';
       for (let i = 0; i < lines.length; i++) {
-        // Use activeLineHeight for drawing positions
-        ctx.fillText(lines[i].text, effectiveMaxWidth / 2, i * activeLineHeight);
-        ctx.fillText(lines[i].text, effectiveMaxWidth / 2, i * activeLineHeight);
+        ctx.fillText(lines[i].text, canvasWidth / 2, i * activeLineHeight + blurPadding);
       }
 
       // Render Foreground
       ctx.shadowBlur = 0;
       ctx.shadowColor = 'transparent';
-      ctx.fillStyle = textColor;
+      ctx.fillStyle = activeTextColor;
       for (let i = 0; i < lines.length; i++) {
-        ctx.fillText(lines[i].text, effectiveMaxWidth / 2, i * activeLineHeight);
+        ctx.fillText(lines[i].text, canvasWidth / 2, i * activeLineHeight + blurPadding);
       }
 
       setIsReady(true);

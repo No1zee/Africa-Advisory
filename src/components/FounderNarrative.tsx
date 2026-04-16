@@ -80,7 +80,7 @@ export const FounderNarrative = () => {
                 transition={TRANSITIONS.EXQUISITE}
               >
                 <Display as="h2" className="text-4xl md:text-5xl leading-tight mb-8 font-light italic">
-                  Navigating systemic complexity with over four decades of <span className="text-jade not-italic">institutional pedigree.</span>
+                  Over the last 40 years, Africa Advisory has built up a network of information, contact and influence with institutions, governments and companies internationally.
                 </Display>
                 <motion.div 
                   initial={{ width: 0 }}
@@ -93,20 +93,32 @@ export const FounderNarrative = () => {
 
             <div className="space-y-12">
               <motion.div variants={VARIANTS.RISE_REVEAL} transition={{ delay: 0.2 }}>
-                <Body className="text-base-obsidian/90 text-xl md:text-2xl font-medium leading-snug">
-                  Africa Advisory is recognised as the continent’s premier conduit for capital facilitation, overcoming deal-breaking restrictions to deliver sovereign-level outcomes.
+                <Body className="text-base-obsidian/90 text-xl md:text-2xl font-medium leading-snug max-w-[65ch]">
+                  Faced often with seemingly impossible deal-breaking restrictions and limitations, Africa Advisory has unlocked the door to solutions that never seemed possible.
                 </Body>
               </motion.div>
               
               <motion.div variants={VARIANTS.RISE_REVEAL} transition={{ delay: 0.4 }}>
-                <Body className="text-base-obsidian/70 leading-relaxed font-body">
-                  By deploying a combination of deep localized intelligence and global financial engineering, we reach financial close on mandates requiring specialised navigation of African political and economic landscapes.
+                <Body className="text-base-obsidian/70 leading-relaxed font-body max-w-[65ch]">
+                  A broad network of relationships holds the key to many doors across a wide range of sectors and a broad geographic area in Africa's often complex, always enigmatic, business and investment environment.
                 </Body>
               </motion.div>
 
               <motion.div variants={VARIANTS.RISE_REVEAL} transition={{ delay: 0.6 }}>
-                <Body className="text-base-obsidian/70 leading-relaxed font-body">
-                  Our value lies in our connectivity. With institutional heritage spanning global financial centers and sovereign advisory committees, we offer clients a level of access and discretion unique to the African advisory space.
+                <Body className="text-base-obsidian/70 leading-relaxed font-body max-w-[65ch]">
+                  Senior positions with BIAO, Amro Bank, Union Bank of Switzerland and the HSBC group allowed Mr. Jewels rare insight into the African environment. Valuable and in-depth experience was gained through a decade on the Africa Advisory Committee for the British Government.
+                </Body>
+              </motion.div>
+
+              <motion.div variants={VARIANTS.RISE_REVEAL} transition={{ delay: 0.7 }}>
+                <Body className="text-base-obsidian/70 leading-relaxed font-body max-w-[65ch]">
+                  He has painstakingly peeled the layers of Africa's intrigue, mystique and inscrutability and can justifiably claim to know corporate Africa from the inside out. In 2000, Mr. Jewels decided to establish an office in Johannesburg, believing South Africa is the engine room for much African activity.
+                </Body>
+              </motion.div>
+
+              <motion.div variants={VARIANTS.RISE_REVEAL} transition={{ delay: 0.8 }}>
+                <Body className="text-base-obsidian/70 leading-relaxed font-body max-w-[65ch]">
+                  He demonstrates a firm belief in providing African solutions for Africa — with in-depth knowledge of both Francophone and Anglophone territories. His ability to get the job done in ways that are often unique and groundbreaking has earned him the reputation of Africa's Dealmaker.
                 </Body>
               </motion.div>
 

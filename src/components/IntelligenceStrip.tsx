@@ -35,7 +35,7 @@ export const IntelligenceStrip = () => {
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <Label className="text-jade opacity-100 flex-shrink-0 tracking-[0.4em]">
+            <Label className="text-brand-teal font-semibold flex-shrink-0 tracking-[0.4em]">
               ACTIVE PORTFOLIO // STRATEGIC ADVISORY
             </Label>
           </motion.div>
@@ -51,10 +51,10 @@ export const IntelligenceStrip = () => {
                 transition={TRANSITIONS.RESTRAINED}
                 className="absolute inset-0 flex items-center gap-8"
               >
-                <Tabular className="text-lg font-medium tracking-wide text-gold">
+                <Tabular className="text-lg font-medium tracking-wide text-brand-gold">
                   {current.value}
                 </Tabular>
-                <Label className="text-[0.7rem] opacity-60 uppercase tracking-widest whitespace-nowrap">
+                <Label className="text-[0.7rem] text-white/70 uppercase tracking-widest whitespace-nowrap">
                   {current.label}
                 </Label>
               </motion.div>

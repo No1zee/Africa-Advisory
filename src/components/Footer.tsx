@@ -6,39 +6,68 @@ import { Display, Body, Label, Tabular } from './Typography';
 
 export const Footer = () => {
   return (
-    <footer className="section pt-32 pb-16 bg-base-obsidian text-secondary-parchment border-t border-foreground/5 overflow-hidden">
-      <div className="container relative py-12">
-        <div className="editorial-grid gap-24 mb-24 items-start border-b border-foreground/5 pb-24">
-          <div className="col-span-12 md:col-span-4 lg:col-span-3">
-             <Label className="block mb-8 opacity-40 uppercase tracking-widest text-[0.6rem]">Quick Links</Label>
-             <div className="flex flex-col space-y-4">
-                {['Home', 'About', 'Services', 'Contact'].map(link => (
-                  <a key={link} href={`#${link.toLowerCase()}`} className="font-body text-xs text-secondary-parchment/60 hover:text-jade transition-colors uppercase tracking-[0.2em]">{link}</a>
+    <footer className="section pt-48 pb-24 bg-base-obsidian text-secondary-parchment border-t border-white/5 overflow-hidden relative">
+      <div className="container relative">
+        {/* Top Branding Section */}
+        <div className="flex flex-col md:flex-row justify-between items-start mb-32 gap-12">
+          <div className="max-w-xl">
+             <Display className="text-4xl md:text-5xl lg:text-6xl text-gold/90 mb-8 leading-none tracking-tighter uppercase italic font-light">
+                Africa <span className="text-secondary-parchment/80 not-italic font-medium">Advisory.</span>
+             </Display>
+             <Body className="text-sm md:text-base opacity-40 max-w-sm uppercase tracking-[0.2em] leading-relaxed">
+                FACILITATING OUTCOMES IN MARKETS REQUIRING SYSTEMIC NAVIGATION AND SOVEREIGN CONNECTIVITY SINCE 1984.
+             </Body>
+          </div>
+          <div className="flex gap-12">
+             <div className="w-12 h-12 border border-jade/20 rounded-full flex items-center justify-center text-jade opacity-40 hover:opacity-100 transition-opacity">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+                  <path d="M7 17L17 7M17 7H7M17 7V17" />
+                </svg>
+             </div>
+          </div>
+        </div>
+
+        <div className="editorial-grid gap-y-24 gap-x-12 mb-32 items-start border-t border-white/5 pt-24">
+          <div className="col-span-12 md:col-span-6 lg:col-span-3">
+             <Label className="block mb-12 opacity-30 uppercase tracking-[0.5em] text-[0.5rem] font-bold">Execution Hubs</Label>
+             <div className="flex flex-col space-y-6">
+                {['Johannesburg', 'Nairobi', 'Lagos', 'London (Desk)'].map(hub => (
+                  <div key={hub} className="group cursor-default">
+                    <span className="font-body text-[0.65rem] text-secondary-parchment/60 group-hover:text-jade transition-colors uppercase tracking-[0.3em]">{hub}</span>
+                    <div className="h-px w-0 group-hover:w-8 bg-jade transition-all duration-500 mt-1" />
+                  </div>
                 ))}
              </div>
           </div>
 
-          <div className="col-span-12 md:col-span-4 lg:col-span-3">
-             <Label className="block mb-8 opacity-40 uppercase tracking-widest text-[0.6rem]">Legal & Compliance</Label>
-             <div className="flex flex-col space-y-4">
-                {['Legal', 'Terms & Conditions', 'Privacy Policy', 'Disclaimer'].map(link => (
-                  <a key={link} href="#" className="font-body text-xs text-secondary-parchment/60 hover:text-gold transition-colors uppercase tracking-[0.2em]">{link}</a>
+          <div className="col-span-12 md:col-span-6 lg:col-span-3">
+             <Label className="block mb-12 opacity-30 uppercase tracking-[0.5em] text-[0.5rem] font-bold">Mandates</Label>
+             <div className="flex flex-col space-y-6">
+                {['Project Finance', 'Trade Finance', 'Debt Resolution', 'Legal & Compliance'].map(link => (
+                  <a key={link} href="#" className="font-body text-[0.65rem] text-secondary-parchment/60 hover:text-gold transition-colors uppercase tracking-[0.3em] block">{link}</a>
                 ))}
              </div>
           </div>
 
-          <div className="col-span-12 md:col-span-4 lg:col-span-6 lg:text-right">
-             <Label className="block mb-8 opacity-40 uppercase tracking-widest text-[0.6rem]">Institutional Heritage</Label>
-             <p className="font-body text-[0.6rem] text-foreground/40 max-w-sm ml-auto uppercase tracking-widest leading-relaxed">
-                Based on 40 years of specialised experience Africa Advisory has rapidly gained the reputation as the professional in inter and intra Africa financing and business facilitation consultancy.
+          <div className="col-span-12 lg:col-span-6">
+             <Label className="block mb-12 opacity-30 uppercase tracking-[0.5em] text-[0.5rem] font-bold">Heritage Summary</Label>
+             <p className="font-body text-[0.7rem] text-secondary-parchment/40 max-w-lg uppercase tracking-[0.25em] leading-[1.8] italic">
+                Simple. Practical. Workable. Over four decades of specialised experience facilitating outcomes in markets that require systemic navigation — delivering African solutions for Africa.
              </p>
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center opacity-40">
-           <Label className="text-[0.6rem] uppercase tracking-widest">Copyright © 2016, Africa Advisory Ltd. All Rights Reserved.</Label>
-           <div className="mt-8 md:mt-0">
-             <Label className="text-[0.5rem] uppercase tracking-widest italic">South African Web Design and Hosting by eConsultant</Label>
+        <div className="flex flex-col lg:flex-row justify-between items-center gap-12 pt-12 border-t border-white/5 opacity-30">
+           <div className="flex flex-col md:flex-row items-center gap-8">
+             <Label className="text-[0.55rem] uppercase tracking-[0.4em]">© 2016‐2024 Africa Advisory Ltd.</Label>
+             <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-gold/50" />
+             <Link href="/privacy" className="text-[0.55rem] uppercase tracking-[0.4em] hover:text-gold transition-colors">Privacy Privacy</Link>
+             <Link href="/terms" className="text-[0.55rem] uppercase tracking-[0.4em] hover:text-gold transition-colors">Strategic Terms</Link>
+           </div>
+           
+           <div className="text-center lg:text-right">
+             <Label className="text-[0.5rem] uppercase tracking-[0.5em] block mb-2 font-light">Digital Implementation</Label>
+             <Tabular className="text-[0.55rem] uppercase tracking-[0.3em] font-medium text-jade">eConsultant Collective</Tabular>
            </div>
         </div>
       </div>

@@ -28,7 +28,7 @@ export const HubGrid = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <Label className="text-jade mb-4 tracking-[0.3em] uppercase">Regional Presence</Label>
+              <Label className="text-brand-teal font-semibold mb-4 tracking-[0.3em] uppercase">Regional Presence</Label>
               <Display as="h2" className="text-5xl md:text-7xl mb-8 leading-[0.95] tracking-tighter">
                 Architectural Reach. <br />
                 <span className="italic text-foreground/40">Uncommon Connectivity.</span>
@@ -48,8 +48,8 @@ export const HubGrid = () => {
                 <Label className="text-[0.6rem] opacity-40 uppercase tracking-widest mt-2">Capital Mobilised</Label>
               </motion.div>
               <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-                <Tabular className="text-4xl text-jade">14</Tabular>
-                <Label className="text-[0.6rem] opacity-40 uppercase tracking-widest mt-2">Markets Served</Label>
+                <Tabular className="text-4xl text-brand-teal">14</Tabular>
+                <Label className="text-[0.6rem] text-brand-teal/60 font-medium uppercase tracking-widest mt-2">Markets Served</Label>
               </motion.div>
             </div>
           </div>
@@ -76,9 +76,9 @@ export const HubGrid = () => {
               className="liquid-glass rounded-sm p-8 flex flex-col justify-between group hover:border-jade transition-all"
             >
               <div>
-                <Label className="text-[0.6rem] text-jade/60 mb-3 tracking-widest uppercase">Southern Africa HUB</Label>
-                <Display as="h3" className="text-3xl mb-4 group-hover:text-jade transition-colors">Johannesburg</Display>
-                <p className="text-sm text-foreground/60 leading-relaxed font-body">
+                <Label className="text-[0.65rem] text-brand-teal font-medium mb-3 tracking-widest uppercase">Southern Africa HUB</Label>
+                <Display as="h3" className="text-3xl mb-4 group-hover:text-brand-teal transition-colors text-white/95">Johannesburg</Display>
+                <p className="text-sm text-foreground/75 leading-relaxed font-body">
                   Specialised center for debt resolution and project finance structuring. Est. 1984.
                 </p>
               </div>
@@ -94,9 +94,9 @@ export const HubGrid = () => {
               className="liquid-glass rounded-sm p-8 flex flex-col justify-between group hover:border-jade transition-all"
             >
               <div>
-                <Label className="text-[0.6rem] text-jade/60 mb-3 tracking-widest uppercase">East Africa HUB</Label>
-                <Display as="h3" className="text-3xl mb-4 group-hover:text-jade transition-colors">Nairobi</Display>
-                <p className="text-sm text-foreground/60 leading-relaxed font-body">
+                <Label className="text-[0.65rem] text-brand-teal font-medium mb-3 tracking-widest uppercase">East Africa HUB</Label>
+                <Display as="h3" className="text-3xl mb-4 group-hover:text-brand-teal transition-colors text-white/95">Nairobi</Display>
+                <p className="text-sm text-foreground/75 leading-relaxed font-body">
                   Nodal point for regional infrastructure corridors and agri-tech investment syndication.
                 </p>
               </div>
@@ -119,7 +119,7 @@ export const HubGrid = () => {
               <Display as="h3" className="text-3xl text-gold mb-2">China-Africa Capital Bridge</Display>
               <Label className="text-[0.7rem] opacity-40 uppercase tracking-[0.2em]">Shenzhen // Institutional Liquidity Access</Label>
             </div>
-            <p className="text-base text-foreground/60 max-w-2xl leading-relaxed font-body">
+            <p className="text-base text-foreground/80 max-w-2xl leading-relaxed font-body">
               Providing direct institutional connectivity to the world's primary source of infrastructure liquidity and technical expertise, specifically tailored for African sovereign and enterprise requirements.
             </p>
           </motion.div>
