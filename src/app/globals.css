@@ -15,7 +15,7 @@
   --text-secondary: rgba(255, 255, 255, 0.70);
   --text-muted: rgba(255, 255, 255, 0.40);
   --brand-teal: #2D8C7A;
-  --brand-gold: #C9A96E;
+  --brand-gold: #8C7243;
   --bg-dark: #0D1212;
   --bg-card: rgba(255, 255, 255, 0.04);
   
@@ -53,7 +53,7 @@
   --foreground: var(--secondary-parchment);
   --accent: var(--accent-gold);
   --jade: 182 39% 26%;             /* #285a5c - Intelligence Teal */
-  --gold: 38 49% 47%;              /* #b68a3d - Burnished Gold */
+  --gold: 38 40% 35%;              /* #7d5c2d - Burnished Gold (Darkened) */
   --border: 216 12% 15%;            /* Subtle 1px alpha border */
   --selection: var(--gold);
 
@@ -74,10 +74,14 @@
   }
 }
 
-[data-theme='light'] {
+[data-theme='light'], .bg-white, .bg-\[\#F8F6F3\] {
   --background: var(--secondary-parchment);
   --foreground: var(--base-obsidian);
+  --text-primary: rgba(18, 20, 23, 0.95);
+  --text-secondary: rgba(18, 20, 23, 0.75);
+  --text-muted: rgba(18, 20, 23, 0.45);
   --border: 38 20% 85%;
+  color: var(--text-primary);
 }
 
 /* Reset & Base */

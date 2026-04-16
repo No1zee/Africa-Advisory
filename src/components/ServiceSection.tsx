@@ -136,14 +136,14 @@ export const ServiceSection = () => {
                     whileInView={{ opacity: 1 }}
                     transition={{ delay: (i * 0.1) + 0.8 }}
                   >
-                    <Body className="text-[#0D1212] mb-12 text-base leading-relaxed transition-colors">
+                    <Body className="text-foreground mb-12 text-base leading-relaxed transition-colors">
                       {pillar.description}
                     </Body>
                   </motion.div>
                 </div>
 
                 <div className="relative z-10 flex justify-between items-end border-t border-black/10 pt-8">
-                  <Tabular className="text-[0.65rem] text-[#8C764D] font-bold uppercase tracking-widest">{pillar.metric}</Tabular>
+                  <Tabular className="text-[0.65rem] text-brand-gold font-bold uppercase tracking-widest">{pillar.metric}</Tabular>
                   <Label className="text-[0.65rem] text-brand-teal font-bold uppercase group-hover:text-brand-teal transition-colors tracking-widest">Strategic Logic</Label>
                 </div>
 

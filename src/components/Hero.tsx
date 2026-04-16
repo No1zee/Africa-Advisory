@@ -247,7 +247,7 @@ export const Hero = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: isMobile ? 2.4 : 8.8 }}
-                whileHover={{ scale: 1.02, borderColor: '#C9A96E' }}
+                whileHover={{ scale: 1.02, borderColor: '#8C7243' }}
                 whileTap={{ scale: 0.98 }}
                 className="group relative w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 liquid-glass text-white/90 font-body text-[0.6rem] md:text-[0.7rem] uppercase tracking-[0.4em] border border-white/40 hover:text-gold transition-all"
                 onClick={() => {}}
