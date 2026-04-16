@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArchitecturalGrid } from './ArchitecturalGrid';
 import { useUserTier } from '@/hooks/useUserTier';
-import { Group, Display, Body, Label, Tabular, Sovereign } from './Typography';
+import { Display, Body, Label, Tabular, Sovereign } from './Typography';
 import dynamic from 'next/dynamic';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
