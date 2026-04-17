@@ -39,7 +39,9 @@ export default function RootLayout({
           <SovereignOverlay />
           <Navigator />
           <RevealManager />
-          {children}
+          <main id="main-content">
+            {children}
+          </main>
         </Pretext>
       </body>
     </html>

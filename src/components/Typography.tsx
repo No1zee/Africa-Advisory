@@ -24,7 +24,7 @@ export const Sovereign: React.FC<TypographyProps> = ({
   as: Component = 'h2' 
 }) => {
   return (
-    <Component className={`font-display font-normal uppercase tracking-[0.4em] text-[0.7rem] md:text-[0.8rem] text-jade/80 ${className}`}>
+    <Component className={`font-display font-normal uppercase tracking-[0.4em] text-[0.9rem] md:text-[1rem] text-jade/80 ${className}`}>
       {children}
     </Component>
   );
@@ -48,7 +48,7 @@ export const Label: React.FC<TypographyProps> = ({
   as: Component = 'span' 
 }) => {
   return (
-    <Component className={`font-body text-[0.6rem] md:text-[0.7rem] tracking-[0.3em] uppercase opacity-70 ${className}`}>
+    <Component className={`font-body text-[0.75rem] md:text-[0.85rem] tracking-[0.3em] uppercase opacity-70 ${className}`}>
       {children}
     </Component>
   );

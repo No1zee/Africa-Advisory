@@ -38,37 +38,83 @@ const MANDATES = [
   },
   {
     size: "$150M",
-    sector: "ICT & Digital",
+    sector: "ICT",
     geography: "Pan-African",
     outcome: "Debt financing for rapid deployment of high-speed telecommunications infrastructure.",
     year: "2023",
-    image: "/assets/hero-bg.png" // Fallback to existing asset
+    image: "/assets/hero-bg.png"
   }
 ];
 
 export const SelectedMandates = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const introRef = useRef<HTMLDivElement>(null);
+  const flashRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
+    // 1. Exit animation for the intro text - slowed down and more graceful
+    gsap.to(introRef.current, {
+      scrollTrigger: {
+        trigger: ".mandate-session-0",
+        start: "top 150%", // Start earlier due to buffer
+        end: "top 60%",
+        scrub: 1, // Higher scrub value for more "weight"
+      },
+      opacity: 0,
+      scale: 1.1,
+      filter: "blur(15px)",
+      y: -20,
+      ease: "power1.inOut"
+    });
+
+    // 2. Softened Glow Transition (replaces violent flash)
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".mandate-session-0",
+        start: "top 120%", 
+        end: "top 40%",
+        scrub: 1.5,
+      }
+    });
+
+    tl.to(flashRef.current, { 
+      opacity: 0.7, // Cap opacity for a 'softer' feel
+      duration: 0.5, 
+      ease: "power2.in" 
+    })
+    .to(flashRef.current, { 
+      opacity: 0, 
+      duration: 0.5, 
+      ease: "power2.out" 
+    });
+
+    // 3. Individual session reveal
     const sections = gsap.utils.toArray('.mandate-session');
-    
-    sections.forEach((section: any, i) => {
+    sections.forEach((section: any) => {
       ScrollTrigger.create({
         trigger: section,
         start: "top center",
         onEnter: () => gsap.to(section, { opacity: 1, duration: 1 }),
-        onLeaveBack: () => gsap.to(section, { opacity: 0.3, duration: 1 }),
+        onLeaveBack: () => gsap.to(section, { opacity: 0.5, duration: 1 }),
       });
     });
   }, { scope: containerRef });
 
   return (
     <section id="mandates" ref={containerRef} className="bg-base-obsidian relative">
-      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center pointer-events-none z-20">
+      {/* Softened Transition Glow */}
+      <div 
+        ref={flashRef}
+        className="fixed inset-0 bg-secondary-parchment/60 pointer-events-none z-[100] opacity-0 backdrop-blur-sm"
+      />
+
+      <div 
+        ref={introRef}
+        className="sticky top-0 h-screen w-full flex flex-col items-center justify-center pointer-events-none z-20"
+      >
         <div className="container px-6 text-center">
-            <Label className="text-brand-teal mb-4 uppercase tracking-[0.3em] font-semibold">Strategic Outcomes</Label>
-            <Display className="text-3xl md:text-5xl lg:text-7xl text-secondary-parchment transition-all duration-700">
-                Africa Advisory is widely known as Africa's Dealmaker
+            <Display className="text-3xl md:text-5xl lg:text-6xl text-secondary-parchment leading-tight">
+                Africa Advisory,<br className="hidden md:block" /> Africa's Dealmaker
             </Display>
             <motion.div 
               initial={{ width: 0 }}
@@ -79,15 +125,18 @@ export const SelectedMandates = () => {
         </div>
       </div>
 
+      {/* Transition Buffer to make user scroll slightly longer */}
+      <div className="h-[60vh] md:h-[80vh] pointer-events-none" />
+
       {MANDATES.map((mandate, i) => (
         <div 
           key={i} 
-          className="mandate-session relative min-h-screen flex items-center justify-center overflow-hidden border-t border-white/5"
+          className={`mandate-session mandate-session-${i} relative min-h-screen flex items-center justify-center overflow-hidden border-t border-white/5`}
         >
           <SpotlightBackground 
             image={mandate.image} 
             active={true} 
-            opacity={0.2}
+            opacity={0.5}
             blur={10}
           />
           
@@ -100,7 +149,7 @@ export const SelectedMandates = () => {
                 transition={TRANSITIONS.EXQUISITE}
               >
                 <div className="mb-8 flex flex-col items-center">
-                    <Tabular className="text-5xl md:text-7xl lg:text-9xl text-gold mb-2 [text-shadow:0_4px_12px_rgba(0,0,0,0.8)]">
+                    <Tabular className="text-5xl md:text-7xl lg:text-9xl text-gold mb-2 [text-shadow:0_4px_12px_rgba(0,0,0,0.8)] mask-reveal">
                         {mandate.size}
                     </Tabular>
                     <Sovereign className="text-brand-teal tracking-[0.5em] [text-shadow:0_1px_8px_rgba(0,0,0,0.8)]">{mandate.sector}</Sovereign>
@@ -123,7 +172,6 @@ export const SelectedMandates = () => {
 
       {/* Rhythmic Closer */}
       <div className="h-[50vh] flex items-center justify-center bg-gradient-to-b from-transparent to-base-obsidian">
-          <Label className="opacity-20 italic">End of Briefing: Mandates</Label>
       </div>
     </section>
   );

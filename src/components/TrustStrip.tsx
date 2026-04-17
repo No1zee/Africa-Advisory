@@ -17,7 +17,7 @@ export const TrustStrip = () => {
     <div className="w-full bg-base-obsidian py-8 border-y border-white/5 relative overflow-hidden">
       <div className="container flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="flex flex-col gap-1">
-          <Label className="text-jade tracking-[0.3em] uppercase text-[0.45rem] opacity-60">Institutional Exposure</Label>
+          <Label className="text-jade tracking-[0.3em] uppercase text-[0.45rem] opacity-60">Institutional Legacy</Label>
           <div className="mt-2 h-[1px] w-8 bg-jade/40" />
         </div>
         
@@ -29,7 +29,7 @@ export const TrustStrip = () => {
               whileInView={{ opacity: 0.4 }}
               whileHover={{ opacity: 1 }}
               transition={{ delay: i * 0.1 }}
-              className="flex flex-col items-center group cursor-default"
+              className="flex flex-col items-center group cursor-default blur-reveal"
             >
               <span className="font-display text-lg tracking-widest text-secondary-parchment group-hover:text-jade transition-colors">
                 {partner.name}

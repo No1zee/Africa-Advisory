@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 interface Props {
   image?: string;
@@ -15,7 +16,7 @@ export const SpotlightBackground: React.FC<Props> = ({
   image, 
   active, 
   blur = 20, 
-  opacity = 0.4,
+  opacity = 0.5,
   grayscale = true 
 }) => {
   return (
@@ -32,7 +33,8 @@ export const SpotlightBackground: React.FC<Props> = ({
             <img 
               src={image} 
               alt="Contextual Background" 
-              className="w-full h-full object-cover scale-110" 
+              className="absolute inset-0 w-full h-full object-cover scale-110" 
+              loading="lazy"
             />
           )}
           <div className="absolute inset-0 bg-base-obsidian/40 mix-blend-multiply" />

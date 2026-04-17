@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { NetworkMap } from './NetworkMap';
 import { Display, Body, Label, Tabular } from './Typography';
+import { PretextHeader } from './PretextHeader';
 
 const HUB_DATA = [
   { city: 'Johannesburg', region: 'ZA', note: 'Regional Sovereign Debt & Project Finance Hub', role: 'HQ' },
@@ -29,10 +29,14 @@ export const HubGrid = () => {
               viewport={{ once: true }}
             >
               <Label className="text-brand-teal font-semibold mb-4 tracking-[0.3em] uppercase">Regional Presence</Label>
-              <Display as="h2" className="text-5xl md:text-7xl mb-8 leading-[0.95] tracking-tighter">
-                Architectural Reach. <br />
-                <span className="italic text-foreground/40">Uncommon Connectivity.</span>
-              </Display>
+              <motion.div className="mask-reveal py-4">
+                <PretextHeader 
+                  text="Architectural Reach. Uncommon Connectivity."
+                  fontSize={72}
+                  color="var(--foreground)"
+                  maxWidth={800}
+                />
+              </motion.div>
               <Body className="text-lg text-foreground/60 max-w-2xl leading-relaxed">
                 Our physical presence across key African markets is augmented by a global network of institutional partners, enabling us to execute complex cross-border mandates with local precision and international scale.
               </Body>
@@ -58,15 +62,15 @@ export const HubGrid = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
           {/* Main Map Cell */}
           <motion.div 
-            className="md:col-span-12 lg:col-span-8 liquid-glass rounded-sm p-8 group overflow-hidden relative min-h-[400px]"
+            className="md:col-span-12 lg:col-span-8 liquid-glass rounded-sm p-8 group overflow-hidden relative min-h-[400px] reveal"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
           >
             <div className="absolute top-0 right-0 p-4 sculptural-label text-[0.5rem] opacity-20 uppercase tracking-widest">
               Execution Corridors & Sovereignty Distribution
             </div>
-            <div className="relative h-full flex items-center justify-center py-12">
-              <NetworkMap />
+            <div className="relative h-full flex items-center justify-center py-6">
+              <CorridorMap />
             </div>
           </motion.div>
 
@@ -76,7 +80,7 @@ export const HubGrid = () => {
               className="liquid-glass rounded-sm p-8 flex flex-col justify-between group hover:border-jade transition-all"
             >
               <div>
-                <Label className="text-[0.65rem] text-brand-teal font-medium mb-3 tracking-widest uppercase">Southern Africa HUB</Label>
+                <Label className="text-jade-bright font-medium mb-3 tracking-widest uppercase opacity-100">Southern Africa HUB</Label>
                 <Display as="h3" className="text-3xl mb-4 group-hover:text-brand-teal transition-colors text-white/95">Johannesburg</Display>
                 <p className="text-sm text-foreground/75 leading-relaxed font-body">
                   Specialised center for debt resolution and project finance structuring. Est. 1984.
@@ -94,7 +98,7 @@ export const HubGrid = () => {
               className="liquid-glass rounded-sm p-8 flex flex-col justify-between group hover:border-jade transition-all"
             >
               <div>
-                <Label className="text-[0.65rem] text-brand-teal font-medium mb-3 tracking-widest uppercase">East Africa HUB</Label>
+                <Label className="text-jade-bright font-medium mb-3 tracking-widest uppercase opacity-100">East Africa HUB</Label>
                 <Display as="h3" className="text-3xl mb-4 group-hover:text-brand-teal transition-colors text-white/95">Nairobi</Display>
                 <p className="text-sm text-foreground/75 leading-relaxed font-body">
                   Nodal point for regional infrastructure corridors and agri-tech investment syndication.

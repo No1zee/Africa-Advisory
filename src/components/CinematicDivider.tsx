@@ -45,11 +45,11 @@ export const CinematicDivider = () => {
           className="max-w-3xl"
         >
           <Label className="text-brand-teal mb-6 uppercase tracking-[0.5em] font-semibold opacity-60">
-            The Continental Metaphor
+            Regional Perspective
           </Label>
           <Display as="h2" className="text-4xl md:text-6xl text-secondary-parchment italic font-light leading-tight">
             Navigating the <br />
-            <span className="opacity-70">Inscrutable.</span>
+            <span className="opacity-70">Landscape.</span>
           </Display>
           
           <motion.div 

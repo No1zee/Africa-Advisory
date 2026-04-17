@@ -46,14 +46,15 @@ export const TickerBar = () => {
   }, { scope: containerRef, dependencies: [stats] });
 
   return (
-    <div ref={containerRef} className="absolute bottom-0 left-0 right-0 h-16 border-t border-foreground/10 flex items-center overflow-hidden bg-background/80 backdrop-blur-md z-20">
+    <div ref={containerRef} className="fixed bottom-0 left-0 right-0 h-14 border-t border-jade/20 flex items-center overflow-hidden liquid-glass z-[100]">
+      <div className="absolute inset-0 bg-gradient-to-r from-base-obsidian via-transparent to-base-obsidian opacity-50 z-10 pointer-events-none" />
       <div ref={tickerRef} className="flex whitespace-nowrap will-change-transform">
-         {[...stats, ...stats].map((stat, i) => (
-           <div key={i} className="flex items-center px-12 border-r border-foreground/5 last:border-r-0">
-             <span className="sculptural-label mr-4 text-accent">{stat.label}:</span>
-             <span className="font-sans text-xs font-semibold tracking-widest">{stat.value}</span>
-           </div>
-         ))}
+          {[...stats, ...stats].map((stat, i) => (
+            <div key={i} className="flex items-center px-16 border-r border-jade/10 last:border-r-0">
+              <span className="sculptural-label mr-4 text-jade opacity-80">{stat.label}:</span>
+              <span className="font-display text-sm tracking-widest text-secondary-parchment/90">{stat.value}</span>
+            </div>
+          ))}
       </div>
     </div>
   );

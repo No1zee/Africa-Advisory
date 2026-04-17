@@ -6,13 +6,11 @@ import { Label } from './Typography';
 
 interface BriefingDividerProps {
   label?: string;
-  status?: string;
   className?: string;
 }
 
 export const BriefingDivider = ({ 
   label = "", 
-  status = "", 
   className = "" 
 }: BriefingDividerProps) => {
   const [mounted, setMounted] = React.useState(false);
@@ -32,14 +30,6 @@ export const BriefingDivider = ({
         >
           <div className="w-2 h-2 bg-jade animate-pulse" />
           <Label className="text-[0.55rem] tracking-[0.3em] font-mono text-gold/60">{label}</Label>
-        </motion.div>
-        
-        <motion.div
-           initial={{ opacity: 0, x: 10 }}
-           whileInView={{ opacity: 1, x: 0 }}
-           viewport={{ once: true }}
-        >
-          <Label className="text-[0.55rem] tracking-[0.3em] font-mono text-jade/40">{status}</Label>
         </motion.div>
       </div>
 

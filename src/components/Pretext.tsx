@@ -5,18 +5,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useUserTier } from '@/hooks/useUserTier';
 import dynamic from 'next/dynamic';
 
-const PretextHaloHeading = dynamic(
-  () => import('./PretextHaloHeading').then((mod) => mod.PretextHaloHeading),
-  { ssr: false }
-);
+import { PretextHeader } from './PretextHeader';
 
 const INTEL_STRINGS = [
   "INITIALIZING_SECURE_PROTOCOLS...",
   "SCANNING_AFRICAN_CAPITAL_VECTORS...",
   "DEAL_FLOW_DETECTED: $4.2B",
   "AUTHENTICATING_STRATEGIC_BRIEFING...",
-  "LOCATION: GEOSPATIAL_AFRICA",
-  "STATUS: DEALMAKER_ACTIVE"
+  "LOCATION: GEOSPATIAL_AFRICA"
 ];
 
 export const Pretext = ({ children }: { children: React.ReactNode }) => {
@@ -109,13 +105,13 @@ export const Pretext = ({ children }: { children: React.ReactNode }) => {
                 className="text-center"
               >
                 <div className="sculptural-label text-accent mb-6 uppercase tracking-[0.3em] text-[0.6rem]">Strategic Intelligence</div>
-                <PretextHaloHeading 
+                <PretextHeader 
                   text="Africa Advisory"
-                  font="italic 400 64px Instrument Serif"
+                  italic={true}
+                  fontSize={64}
                   maxWidth={600}
-                  lineHeight={80}
-                  textColor="#4a3728"
-                  haloColor="rgba(242, 237, 227, 0.9)"
+                  lineHeight={1.25}
+                  color="#4a3728"
                   className="mb-4"
                 />
                 <div className="thin-line w-24 mx-auto opacity-30 h-px bg-soil" />

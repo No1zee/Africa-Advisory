@@ -2,7 +2,9 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Display, Body, Label, Tabular } from './Typography';
+import { PretextHeader } from './PretextHeader';
 import { VARIANTS, TRANSITIONS } from './Motion';
 
 const PILLARS = [
@@ -53,9 +55,14 @@ const PILLARS = [
 export const ServiceSection = () => {
   return (
     <section className="section bg-[#F8F6F3] border-t border-black/5 relative overflow-hidden">
-      {/* Background Image Layer */}
       <div className="absolute inset-0 opacity-[0.05] pointer-events-none grayscale mix-blend-multiply">
-        <img src="/assets/service.png" alt="Infrastructure" className="w-full h-full object-cover" />
+        <Image 
+          src="/assets/service.png" 
+          alt="Infrastructure Background" 
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
       </div>
       
       {/* Noise Reduction Gradient */}
@@ -73,11 +80,18 @@ export const ServiceSection = () => {
             <motion.div variants={VARIANTS.RISE_REVEAL}>
               <Label className="text-brand-teal mb-8 uppercase tracking-[0.2em] font-semibold">Our Focus</Label>
             </motion.div>
-            <motion.div variants={VARIANTS.RISE_REVEAL} transition={{ delay: 0.2 }}>
-              <Display as="h2" className="text-[#0D1212]">
-                Strategic Solutions for <br />
-                <span className="italic opacity-70">High-Intent Capital.</span>
-              </Display>
+            <motion.div 
+              variants={VARIANTS.RISE_REVEAL} 
+              transition={{ delay: 0.2 }}
+              className="mask-reveal"
+            >
+              <PretextHeader 
+                text="Strategic Solutions for High-Intent Capital."
+                fontSize={64}
+                color="#0D1212"
+                maxWidth={600}
+                lineHeight={1.1}
+              />
             </motion.div>
           </div>
           <div className="col-span-12 md:col-start-8 md:col-span-5 flex items-end">
@@ -98,7 +112,7 @@ export const ServiceSection = () => {
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: i * 0.1, ...TRANSITIONS.EXQUISITE }}
-              className="col-span-12 md:col-span-6 lg:col-span-4 group"
+              className="col-span-12 md:col-span-6 lg:col-span-4 group reveal"
             >
               <div className="relative p-12 bg-white hover:bg-[#FDFCFB] border border-black/5 hover:border-brand-teal/20 transition-all duration-700 h-full flex flex-col justify-between overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.02)]">
                 {/* Glass Sheen */}

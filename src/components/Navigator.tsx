@@ -6,16 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Label, Tabular, Display } from './Typography';
 import { TRANSITIONS, VARIANTS } from './Motion';
 
-const STATUS_PHRASES = [
-  "Cross-Border Structuring",
-  "Sovereign Access",
-  "Capital Mobilisation",
-  "Execution Pathways"
-];
-
 export const Navigator = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [statusIndex, setStatusIndex] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [briefingMode, setBriefingMode] = useState(false);
 
@@ -25,13 +17,8 @@ export const Navigator = () => {
     };
     window.addEventListener('scroll', handleScroll);
     
-    const interval = setInterval(() => {
-      setStatusIndex((prev) => (prev + 1) % STATUS_PHRASES.length);
-    }, 3000);
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      clearInterval(interval);
     };
   }, []);
 
@@ -61,21 +48,6 @@ export const Navigator = () => {
                 <Display as="h1" className="text-xl lg:text-2xl tracking-tighter text-secondary-parchment group-hover:text-jade transition-colors duration-500">
                   A<span className="text-secondary-parchment italic opacity-40">A</span>
                 </Display>
-                <div className="overflow-hidden h-3">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={STATUS_PHRASES[statusIndex]}
-                      initial={{ y: 10, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: -10, opacity: 0 }}
-                      transition={{ duration: 0.5, ease: "easeOut" }}
-                    >
-                      <Tabular className="text-[0.45rem] lg:text-[0.55rem] text-gold/60 uppercase tracking-[0.2em] whitespace-nowrap">
-                        {STATUS_PHRASES[statusIndex]}
-                      </Tabular>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
               </div>
             </motion.div>
           </Link>
@@ -89,7 +61,7 @@ export const Navigator = () => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="sculptural-label text-secondary-parchment/40 hover:text-jade transition-colors uppercase tracking-[0.3em] text-[0.6rem] relative group/nav"
+              className="sculptural-label text-secondary-parchment/40 hover:text-jade transition-colors uppercase tracking-[0.3em] text-[0.75rem] relative group/nav"
             >
               {item}
               <motion.div 
@@ -106,7 +78,7 @@ export const Navigator = () => {
             animate={{ opacity: 1, scale: 1 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className={`px-6 py-2 bg-jade text-secondary-parchment font-body text-[0.6rem] uppercase tracking-[0.2em] transition-all hidden lg:flex items-center justify-center hover:bg-gold hover:text-base-obsidian ${
+            className={`px-6 py-2 bg-jade text-base-obsidian font-semibold text-[0.75rem] uppercase tracking-[0.2em] transition-all hidden lg:flex items-center justify-center hover:bg-gold hover:text-base-obsidian ${
               scrolled ? 'py-1.5' : ''
             }`}
           >

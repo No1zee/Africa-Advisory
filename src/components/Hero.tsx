@@ -9,10 +9,8 @@ import dynamic from 'next/dynamic';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 
-const PretextHaloHeading = dynamic(
-  () => import('./PretextHaloHeading').then((mod) => mod.PretextHaloHeading),
-  { ssr: false }
-);
+import Image from 'next/image';
+import { PretextHeader } from './PretextHeader';
 import { DensityDots } from './DensityDots';
 import { CorridorMap } from './CorridorMap';
 
@@ -20,10 +18,8 @@ import { TRANSITIONS, VARIANTS, Counter, StaggeredReveal } from './Motion';
 
 export const Hero = () => {
   const { tier } = useUserTier();
-  const videoRef = useRef<HTMLDivElement>(null);
-  const innerVideoRef = useRef<HTMLVideoElement>(null);
+  const bgContainerRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [isVideoEnded, setIsVideoEnded] = useState(false);
   
   const { scrollYProgress } = useScroll();
   const yParallax = useTransform(scrollYProgress, [0, 1], [0, 200]);
@@ -37,7 +33,7 @@ export const Hero = () => {
 
   useGSAP(() => {
     // Stage 0: Directorial Reveal (Exposure/Bloom)
-    gsap.fromTo(videoRef.current, 
+    gsap.fromTo(bgContainerRef.current, 
       { 
         filter: 'brightness(0) contrast(200%) blur(20px)',
         scale: 1.2,
@@ -52,35 +48,17 @@ export const Hero = () => {
       }
     );
 
-    // Reveal video content subtly
-    gsap.to(innerVideoRef.current, {
-      opacity: 0.4,
-      duration: 3,
-      delay: 1.5,
-      ease: "power1.inOut"
-    });
-
-    // Stage 1: Cinematic Deceleration removed as per user request to prevent stall at the end.
-    // Video will now loop at constant speed (playbackRate = 1.0).
-  }, { scope: videoRef, dependencies: [isMobile] });
-
-  useEffect(() => {
-    // Explicit play fallback for iOS Safari stricter autoplay policies
-    const video = innerVideoRef.current;
-    if (video) {
-      const playVideo = () => {
-        video.play().catch(error => {
-          console.warn("Autoplay was blocked or failed", error);
-        });
-      };
-      
-      if (video.readyState >= 3) {
-        playVideo();
-      } else {
-        video.addEventListener('canplay', playVideo, { once: true });
-      }
+    // Reveal background content subtly
+    const bgImage = bgContainerRef.current?.querySelector('img');
+    if (bgImage) {
+      gsap.to(bgImage, {
+        opacity: 0.4,
+        duration: 3,
+        delay: 1.5,
+        ease: "power1.inOut"
+      });
     }
-  }, []);
+  }, { scope: bgContainerRef, dependencies: [isMobile] });
 
   return (
     <section className="relative h-[100dvh] w-full flex flex-col justify-center items-center overflow-hidden bg-base-obsidian">
@@ -89,26 +67,19 @@ export const Hero = () => {
         <DensityDots height={600} density={0.9} />
       </div>
 
-      {/* Background Video Layer - Scaled and cropped to hide watermarks */}
+      {/* Background Image Layer - Scaled and cropped for cinenatic feel */}
       <motion.div 
-        ref={videoRef}
+        ref={bgContainerRef}
         className="absolute inset-0 z-0 scale-[1.12] pointer-events-none origin-center"
-        style={{ 
-          y: yParallax,
-          clipPath: 'inset(0 0 5% 0)' // Crop bottom 5% to hide watermarks
-        }}
+        style={{ y: yParallax }}
       >
-        <video 
-          ref={innerVideoRef}
-          autoPlay 
-          muted 
-          playsInline 
-          onEnded={() => setIsVideoEnded(true)}
-          preload="auto"
-          src="/assets/elephants-family.mp4"
+        <Image 
+          src="/assets/elephants.png"
+          alt="African Elephants"
+          fill
           className="w-full h-full object-cover grayscale opacity-0"
-        >
-        </video>
+          priority
+        />
         {/* Abstract Topography Overlay Support */}
         <div className="absolute inset-0 bg-base-obsidian/40 mix-blend-multiply" />
         <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-base-obsidian to-transparent opacity-80" />
@@ -117,14 +88,16 @@ export const Hero = () => {
       {/* Background Texture: Orbital Topography */}
       <motion.div 
         initial={{ opacity: 0 }}
-        animate={{ opacity: isVideoEnded ? 0 : 0.3 }}
+        animate={{ opacity: 0.3 }}
         transition={{ duration: 2.5, ease: "easeInOut" }}
         className="absolute inset-0 z-0 pointer-events-none mix-blend-screen overflow-hidden"
       >
-        <img 
+        <Image 
           src="/assets/hero.png" 
-          alt="Topography" 
-          className="w-full h-full object-cover opacity-80 contrast-125 saturate-0"
+          alt="Architectural Topography" 
+          fill
+          className="object-cover opacity-80 contrast-125 saturate-0"
+          priority
         />
       </motion.div>
 
@@ -134,11 +107,11 @@ export const Hero = () => {
       <motion.div 
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ 
-          opacity: isVideoEnded ? 0 : 1,
+          opacity: 1,
           scale: 1.05
         }}
         transition={{ 
-          opacity: { duration: isVideoEnded ? 2.5 : 2.5, delay: isVideoEnded ? 0 : 1.0, ease: "easeInOut" },
+          opacity: { duration: 2.5, delay: 1.0, ease: "easeInOut" },
           scale: { duration: 25, ease: "linear" }
         }}
         className="absolute inset-x-0 top-0 h-full z-0 pointer-events-none overflow-hidden"
@@ -185,12 +158,11 @@ export const Hero = () => {
                       [{word.num}]
                     </Tabular>
                   </motion.div>
-                  <PretextHaloHeading 
+                  <PretextHeader 
                     text={word.text}
-                    font={`italic ${word.weight} clamp(3.5rem, 8vw, 7rem) Inter, sans-serif`}
-                    textColor="hsla(var(--secondary-parchment), 0.95)"
-                    haloColor="hsla(var(--jade), 0.15)"
-                    letterSpacing={-2}
+                    fontSize={isMobile ? 56 : 112}
+                    color="hsla(var(--secondary-parchment), 0.95)"
+                    italic={true}
                     className="decrypt-animation"
                   />
                 </div>
@@ -204,7 +176,7 @@ export const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
                   duration: 1.3,
-                  delay: isMobile ? 2.5 : 6.0,
+                  delay: isMobile ? 2.0 : 3.5,
                   ease: [0.16, 1, 0.3, 1],
                 }}
               >
@@ -218,7 +190,7 @@ export const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
                   duration: 1.1,
-                  delay: isMobile ? 3.0 : 7.5,
+                  delay: isMobile ? 2.5 : 4.5,
                   ease: [0.16, 1, 0.3, 1],
                 }}
               >
@@ -233,10 +205,10 @@ export const Hero = () => {
               <motion.button 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: isMobile ? 2.2 : 8.5 }}
+                transition={{ delay: isMobile ? 1.2 : 5.5 }}
                 whileHover={{ scale: 1.02, boxShadow: '0 0 25px hsla(var(--jade), 0.3)' }}
                 whileTap={{ scale: 0.98 }}
-                className="group relative w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 bg-jade text-secondary-parchment font-body text-[0.6rem] md:text-[0.7rem] uppercase tracking-[0.4em] transition-all"
+                className="group relative w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 bg-jade text-base-obsidian font-semibold text-[0.6rem] md:text-[0.7rem] uppercase tracking-[0.4em] transition-all"
                 onClick={() => {}}
               >
                 AFRICAN SOLUTIONS FOR AFRICA
@@ -246,7 +218,7 @@ export const Hero = () => {
               <motion.button 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: isMobile ? 2.4 : 8.8 }}
+                transition={{ delay: isMobile ? 1.4 : 5.8 }}
                 whileHover={{ scale: 1.02, borderColor: '#8C7243' }}
                 whileTap={{ scale: 0.98 }}
                 className="group relative w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 liquid-glass text-white/90 font-body text-[0.6rem] md:text-[0.7rem] uppercase tracking-[0.4em] border border-white/40 hover:text-gold transition-all"

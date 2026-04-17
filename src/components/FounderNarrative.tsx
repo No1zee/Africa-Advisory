@@ -29,10 +29,11 @@ export const FounderNarrative = () => {
             >
               <img 
                 src="/assets/founder.png" 
-                alt="Founder Shadow" 
-                className="absolute inset-0 w-full h-full object-cover opacity-60 contrast-125 grayscale"
+                alt="Bruce Jewels - Africa's Dealmaker" 
+                className="absolute inset-0 w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-jade/10 mix-blend-overlay" />
+              {/* Subtle glass reflection overlay */}
+              <div className="absolute inset-0 bg-white/5 pointer-events-none" />
               {/* Brushed metal texture overlay */}
               <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/brushed-alum.png')]" />
               <div className="absolute inset-x-0 bottom-0 p-8 md:p-12 bg-gradient-to-t from-base-obsidian via-base-obsidian/40 to-transparent">
