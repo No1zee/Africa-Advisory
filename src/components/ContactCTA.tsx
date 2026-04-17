@@ -7,7 +7,7 @@ import { Display, Body, Label, Tabular } from './Typography';
 export const ContactCTA = () => {
   return (
     <>
-    <section id="contact" className="section golden-hour text-base-obsidian py-32 lg:py-64 border-t border-black/5 relative overflow-hidden">
+    <section id="contact" data-nav-light="true" className="section golden-hour text-base-obsidian py-32 lg:py-64 border-t border-black/5 relative overflow-hidden">
       <div className="golden-hour-glow" />
       {/* Dynamic Background Noise/Graphic */}
       <div className="absolute inset-0 opacity-[0.05] pointer-events-none mix-blend-multiply">

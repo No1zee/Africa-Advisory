@@ -73,6 +73,12 @@
   --max-width: 1440px;
   --gutter: 1.5rem;                 /* Mobile default */
   --section-padding: 5rem;         /* Mobile default */
+
+  /* Safe Area Insets for iPhone X+ */
+  --sat: env(safe-area-inset-top);
+  --sar: env(safe-area-inset-right);
+  --sab: env(safe-area-inset-bottom);
+  --sal: env(safe-area-inset-left);
 }
 
 @media (min-width: 1024px) {
@@ -198,11 +204,25 @@ p, li, td {
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 var(--gutter);
+  padding-left: calc(var(--gutter) + var(--sal, 0px));
+  padding-right: calc(var(--gutter) + var(--sar, 0px));
 }
 
 .section {
   padding: var(--section-padding) 0;
+}
+
+/* Safe Area Utility Classes */
+.safe-pt-nav {
+  padding-top: calc(var(--sat, 0px) + 1.5rem);
+}
+
+.safe-pb-footer {
+  padding-bottom: calc(var(--sab, 0px) + 6rem);
+}
+
+.safe-p-sovereign {
+  padding: max(1rem, var(--sat, 0px)) max(1rem, var(--sar, 0px)) max(1rem, var(--sab, 0px)) max(1rem, var(--sal, 0px));
 }
 
 .divider {

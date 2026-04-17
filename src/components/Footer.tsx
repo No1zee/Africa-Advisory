@@ -6,7 +6,9 @@ import { Display, Body, Label, Tabular } from './Typography';
 
 export const Footer = () => {
   return (
-    <footer className="section pt-48 pb-24 bg-base-obsidian text-secondary-parchment border-t border-white/5 overflow-hidden relative">
+    <footer 
+      className="section pt-48 pb-24 bg-base-obsidian text-secondary-parchment border-t border-white/5 overflow-hidden relative safe-pb-footer"
+    >
       <div className="container relative">
         {/* Top Branding Section */}
         <div className="flex flex-col md:flex-row justify-between items-start mb-32 gap-12">
@@ -15,7 +17,7 @@ export const Footer = () => {
                 Africa <span className="text-secondary-parchment/80 not-italic font-medium">Advisory.</span>
              </Display>
              <Body className="text-sm md:text-base opacity-40 max-w-sm uppercase tracking-[0.2em] leading-relaxed">
-                FACILITATING OUTCOMES IN MARKETS REQUIRING SYSTEMIC NAVIGATION AND SOVEREIGN CONNECTIVITY SINCE 1984.
+                Expert trade and project finance advisory across the African continent since 1984.
              </Body>
           </div>
           <div className="flex gap-12">
@@ -29,7 +31,7 @@ export const Footer = () => {
 
         <div className="editorial-grid gap-y-24 gap-x-12 mb-32 items-start border-t border-white/5 pt-24">
           <div className="col-span-12 md:col-span-6 lg:col-span-3">
-             <Label className="block mb-12 opacity-30 uppercase tracking-[0.5em] text-[0.5rem] font-bold">Execution Hubs</Label>
+             <Label className="block mb-12 opacity-30 uppercase tracking-[0.5em] text-[0.5rem] font-bold">Our Locations</Label>
              <div className="flex flex-col space-y-6">
                 {['Johannesburg', 'Nairobi', 'Lagos', 'London (Desk)'].map(hub => (
                   <div key={hub} className="group cursor-default">
@@ -50,9 +52,9 @@ export const Footer = () => {
           </div>
 
           <div className="col-span-12 lg:col-span-6">
-             <Label className="block mb-12 opacity-30 uppercase tracking-[0.5em] text-[0.5rem] font-bold">Heritage Summary</Label>
+             <Label className="block mb-12 opacity-30 uppercase tracking-[0.5em] text-[0.5rem] font-bold">About Africa Advisory</Label>
              <p className="font-body text-[0.7rem] text-secondary-parchment/40 max-w-lg uppercase tracking-[0.25em] leading-[1.8] italic">
-                Simple. Practical. Workable. Over four decades of specialised experience facilitating outcomes in markets that require systemic navigation — delivering African solutions for Africa.
+                Over four decades of specialised experience facilitating trade and infrastructure development across the continent — delivering bespoke solutions for African markets.
              </p>
           </div>
         </div>
@@ -61,14 +63,11 @@ export const Footer = () => {
            <div className="flex flex-col md:flex-row items-center gap-8">
              <Label className="text-[0.55rem] uppercase tracking-[0.4em]">© 2016‐2024 Africa Advisory Ltd.</Label>
              <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-gold/50" />
-             <Link href="/privacy" className="text-[0.55rem] uppercase tracking-[0.4em] hover:text-gold transition-colors">Privacy Privacy</Link>
-             <Link href="/terms" className="text-[0.55rem] uppercase tracking-[0.4em] hover:text-gold transition-colors">Strategic Terms</Link>
+             <Link href="/privacy" className="text-[0.55rem] uppercase tracking-[0.4em] hover:text-gold transition-colors">Privacy Policy</Link>
+             <Link href="/terms" className="text-[0.55rem] uppercase tracking-[0.4em] hover:text-gold transition-colors">Terms of Service</Link>
            </div>
            
-           <div className="text-center lg:text-right">
-             <Label className="text-[0.5rem] uppercase tracking-[0.5em] block mb-2 font-light">Digital Implementation</Label>
-             <Tabular className="text-[0.55rem] uppercase tracking-[0.3em] font-medium text-jade">eConsultant Collective</Tabular>
-           </div>
+
         </div>
       </div>
     </footer>

@@ -46,7 +46,9 @@ export const SovereignOverlay = () => {
       </div>
 
       {/* Atmospheric Lat/Long Markers */}
-      <div className="fixed inset-0 z-[101] pointer-events-none p-4 lg:p-10 flex flex-col justify-between text-[0.55rem] font-mono tracking-[0.3em] text-gold/30 uppercase">
+      <div 
+        className="fixed inset-0 z-[101] pointer-events-none p-4 lg:p-10 flex flex-col justify-between text-[0.55rem] font-mono tracking-[0.3em] text-gold/30 uppercase safe-p-sovereign"
+      >
         <div className="flex justify-between">
           <div className="flex flex-col gap-1" />
           <div className="text-right">

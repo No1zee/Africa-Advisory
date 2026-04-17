@@ -9,13 +9,13 @@ const BASIC_STATS = [
   { label: 'Structured Capital', value: '$4.2B+' },
   { label: 'Regulated Hubs', value: '12' },
   { label: 'Pan-African Coverage', value: '54 Nations' },
-  { label: 'Strategic Pedigree', value: '40 Years' },
+  { label: 'Established Expertise', value: '40 Years' },
 ];
 
 const ADVANCED_STATS = [
   { label: 'Structured Capital', value: '$4.2B+' },
   { label: 'Active Mandates', value: '7' },
-  { label: 'Focus Region', value: 'SADC / ECOWAS' },
+  { label: 'Focus Region', value: 'SADC & ECOWAS' },
   { label: 'Regulatory Scope', value: 'Cross-Border' },
   { label: 'Key Sectors', value: 'Infrastructure, Tech' },
 ];

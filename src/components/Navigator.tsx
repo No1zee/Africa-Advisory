@@ -10,6 +10,7 @@ export const Navigator = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [briefingMode, setBriefingMode] = useState(false);
+  const [isLight, setIsLight] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,12 +31,33 @@ export const Navigator = () => {
     }
   }, [briefingMode]);
 
+  useEffect(() => {
+    // Dynamic Inversion Logic
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const isIntersecting = entries.some(entry => entry.isIntersecting);
+        setIsLight(isIntersecting);
+      },
+      {
+        rootMargin: '-10% 0% -90% 0%', // Only track the top of the viewport
+        threshold: 0
+      }
+    );
+
+    const lightSections = document.querySelectorAll('[data-nav-light="true"]');
+    lightSections.forEach(section => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <nav className={`fixed top-0 left-0 w-full z-[150] transition-all duration-700 ${
-      scrolled 
-        ? 'bg-base-obsidian/95 backdrop-blur-xl border-b border-white/5 py-4' 
-        : 'bg-transparent py-6 lg:py-10'
-    }`}>
+    <nav 
+      className={`fixed top-0 left-0 w-full z-[150] transition-all duration-700 safe-pt-nav ${
+        scrolled 
+          ? 'bg-base-obsidian/95 backdrop-blur-xl border-b border-white/5 py-4' 
+          : 'bg-transparent py-6 lg:py-10'
+      }`}
+    >
       <div className="container flex justify-between items-center relative">
         <div className="flex items-center gap-6 lg:gap-12">
           <Link href="/" className="group cursor-pointer flex items-center gap-4">
@@ -45,8 +67,13 @@ export const Navigator = () => {
               className="relative"
             >
               <div className="flex flex-col">
-                <Display as="h1" className="text-xl lg:text-2xl tracking-tighter text-secondary-parchment group-hover:text-jade transition-colors duration-500">
-                  A<span className="text-secondary-parchment italic opacity-40">A</span>
+                <Display 
+                  as="h1" 
+                  className={`text-xl lg:text-2xl tracking-tighter transition-colors duration-500 ${
+                    isLight && !scrolled ? 'text-base-obsidian' : 'text-secondary-parchment group-hover:text-jade'
+                  }`}
+                >
+                  A<span className={`${isLight && !scrolled ? 'text-base-obsidian' : 'text-secondary-parchment'} italic opacity-40`}>A</span>
                 </Display>
               </div>
             </motion.div>
@@ -61,11 +88,15 @@ export const Navigator = () => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="sculptural-label text-secondary-parchment/40 hover:text-jade transition-colors uppercase tracking-[0.3em] text-[0.75rem] relative group/nav"
+              className={`sculptural-label transition-colors uppercase tracking-[0.3em] text-[0.75rem] relative group/nav ${
+                isLight && !scrolled ? 'text-base-obsidian/60 hover:text-jade' : 'text-secondary-parchment/40 hover:text-jade'
+              }`}
             >
               {item}
               <motion.div 
-                 className="absolute -bottom-1 left-0 w-0 h-px bg-jade transition-all group-hover/nav:w-full"
+                 className={`absolute -bottom-1 left-0 w-0 h-px transition-all group-hover/nav:w-full ${
+                  isLight && !scrolled ? 'bg-base-obsidian' : 'bg-jade'
+                 }`}
               />
             </motion.a>
           ))}
@@ -78,9 +109,11 @@ export const Navigator = () => {
             animate={{ opacity: 1, scale: 1 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className={`px-6 py-2 bg-jade text-base-obsidian font-semibold text-[0.75rem] uppercase tracking-[0.2em] transition-all hidden lg:flex items-center justify-center hover:bg-gold hover:text-base-obsidian ${
-              scrolled ? 'py-1.5' : ''
-            }`}
+            className={`px-6 py-2 font-semibold text-[0.75rem] uppercase tracking-[0.2em] transition-all hidden lg:flex items-center justify-center ${
+              isLight && !scrolled 
+                ? 'bg-base-obsidian text-white hover:bg-jade' 
+                : 'bg-jade text-base-obsidian hover:bg-gold hover:text-base-obsidian'
+            } ${scrolled ? 'py-1.5' : ''}`}
           >
             Schedule Advisory Call
           </motion.a>
@@ -107,15 +140,21 @@ export const Navigator = () => {
             <div className="relative w-6 h-5">
               <motion.span 
                 animate={menuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-                className="absolute top-0 left-0 w-full h-[1px] bg-secondary-parchment origin-center"
+                className={`absolute top-0 left-0 w-full h-[1px] origin-center transition-colors ${
+                  isLight && !scrolled && !menuOpen ? 'bg-base-obsidian' : 'bg-secondary-parchment'
+                }`}
               />
               <motion.span 
                 animate={menuOpen ? { opacity: 0, x: 10 } : { opacity: 1, x: 0 }}
-                className="absolute top-1/2 -translate-y-1/2 left-0 w-full h-[1px] bg-secondary-parchment"
+                className={`absolute top-1/2 -translate-y-1/2 left-0 w-full h-[1px] transition-colors ${
+                  isLight && !scrolled && !menuOpen ? 'bg-base-obsidian' : 'bg-secondary-parchment'
+                }`}
               />
               <motion.span 
                 animate={menuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-                className="absolute bottom-0 left-0 w-full h-[1px] bg-secondary-parchment origin-center"
+                className={`absolute bottom-0 left-0 w-full h-[1px] origin-center transition-colors ${
+                  isLight && !scrolled && !menuOpen ? 'bg-base-obsidian' : 'bg-secondary-parchment'
+                }`}
               />
             </div>
           </button>

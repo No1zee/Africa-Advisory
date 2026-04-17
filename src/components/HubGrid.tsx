@@ -31,14 +31,14 @@ export const HubGrid = () => {
               <Label className="text-brand-teal font-semibold mb-4 tracking-[0.3em] uppercase">Regional Presence</Label>
               <motion.div className="mask-reveal py-4">
                 <PretextHeader 
-                  text="Architectural Reach. Uncommon Connectivity."
+                  text="Strategic Network. Regional Expertise."
                   fontSize={72}
                   color="var(--foreground)"
                   maxWidth={800}
                 />
               </motion.div>
               <Body className="text-lg text-foreground/60 max-w-2xl leading-relaxed">
-                Our physical presence across key African markets is augmented by a global network of institutional partners, enabling us to execute complex cross-border mandates with local precision and international scale.
+                Our physical presence across key African markets is augmented by a network of institutional partners, enabling us to execute complex cross-border mandates with local knowledge and international scale.
               </Body>
             </motion.div>
           </div>
@@ -67,7 +67,7 @@ export const HubGrid = () => {
             whileInView={{ opacity: 1 }}
           >
             <div className="absolute top-0 right-0 p-4 sculptural-label text-[0.5rem] opacity-20 uppercase tracking-widest">
-              Execution Corridors & Sovereignty Distribution
+              Regional Connectivity & Market Reach
             </div>
             <div className="relative h-full flex items-center justify-center py-6">
               <CorridorMap />
@@ -120,8 +120,8 @@ export const HubGrid = () => {
             whileInView={{ opacity: 1, y: 0 }}
           >
             <div>
-              <Display as="h3" className="text-3xl text-gold mb-2">China-Africa Capital Bridge</Display>
-              <Label className="text-[0.7rem] opacity-40 uppercase tracking-[0.2em]">Shenzhen // Institutional Liquidity Access</Label>
+              <Display as="h3" className="text-3xl text-gold mb-2">China-Africa Capital Access</Display>
+              <Label className="text-[0.7rem] opacity-40 uppercase tracking-[0.2em]">Shenzhen: Institutional Liquidity Access</Label>
             </div>
             <p className="text-base text-foreground/80 max-w-2xl leading-relaxed font-body">
               Providing direct institutional connectivity to the world's primary source of infrastructure liquidity and technical expertise, specifically tailored for African sovereign and enterprise requirements.

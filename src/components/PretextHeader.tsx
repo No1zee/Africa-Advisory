@@ -24,6 +24,7 @@ export const PretextHeader: React.FC<Props> = ({
   color = "currentColor",
   italic = false
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isFontReady, setIsFontReady] = useState(false);
 
@@ -37,6 +38,13 @@ export const PretextHeader: React.FC<Props> = ({
       setIsFontReady(true);
     }
   }, []);
+
+  // Update container style to avoid JSX inline styles lint
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.style.minHeight = `${fontSize * lineHeight}px`;
+    }
+  }, [fontSize, lineHeight]);
 
   useEffect(() => {
     if (!isFontReady || !canvasRef.current || !text) return;
@@ -73,11 +81,14 @@ export const PretextHeader: React.FC<Props> = ({
   }, [text, isFontReady, fontSize, fontFamily, maxWidth, lineHeight, color, italic]);
 
   return (
-    <div className={`relative group/pretext ${className}`}>
+    <div 
+      ref={containerRef}
+      className={`relative group/pretext inline-block min-w-[1em] ${className}`}
+    >
       {/* Visual Canvas Render */}
       <canvas 
         ref={canvasRef} 
-        className="max-w-full h-auto select-none"
+        className={`max-w-full h-auto select-none transition-opacity duration-700 ${isFontReady ? 'opacity-100' : 'opacity-0'}`}
         aria-hidden="true"
       />
       

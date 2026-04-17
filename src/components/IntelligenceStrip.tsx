@@ -6,10 +6,10 @@ import { Tabular, Label } from './Typography';
 import { TRANSITIONS, VARIANTS } from './Motion';
 
 const mandates = [
-  { label: 'Energy/Sovereign Debt', value: '$1.2B' },
-  { label: 'Trade Corridor/East', value: '$450M' },
-  { label: 'Infrastructure/PPP', value: '$820M' },
-  { label: 'Agri-Tech/Growth', value: '$120M' },
+  { label: 'Energy & Sovereign Debt', value: '$1.2B' },
+  { label: 'Trade Corridor Projects', value: '$450M' },
+  { label: 'Infrastructure Development', value: '$820M' },
+  { label: 'Agri-Tech & Growth', value: '$120M' },
   { label: 'Regional Transit', value: '$2.1B' }
 ];
 
@@ -36,7 +36,7 @@ export const IntelligenceStrip = () => {
             viewport={{ once: true }}
           >
             <Label className="text-brand-teal font-semibold flex-shrink-0 tracking-[0.4em]">
-              ACTIVE PORTFOLIO // STRATEGIC ADVISORY
+              STRATEGIC ADVISORY PORTFOLIO
             </Label>
           </motion.div>
           <div className="w-px h-6 bg-foreground/10" />

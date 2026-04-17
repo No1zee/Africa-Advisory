@@ -5,10 +5,10 @@ import { motion } from 'framer-motion';
 import { Label, Tabular } from './Typography';
 
 const PARTNERS = [
-  { name: 'BIAO', role: 'Strategic Heritage' },
-  { name: 'UBS', role: 'Global Standards' },
+  { name: 'BIAO', role: 'Strategic Partner' },
+  { name: 'UBS', role: 'Global Banking' },
   { name: 'HSBC', role: 'Capital Markets' },
-  { name: 'UK GOV', role: 'Advisory Panel' },
+  { name: 'UK GOV', role: 'Trade Advisory' },
   { name: 'AMRO', role: 'Trade Finance' }
 ];
 
@@ -17,7 +17,7 @@ export const TrustStrip = () => {
     <div className="w-full bg-base-obsidian py-8 border-y border-white/5 relative overflow-hidden">
       <div className="container flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="flex flex-col gap-1">
-          <Label className="text-jade tracking-[0.3em] uppercase text-[0.45rem] opacity-60">Institutional Legacy</Label>
+          <Label className="text-jade tracking-[0.3em] uppercase text-[0.45rem] opacity-60">Our Heritage</Label>
           <div className="mt-2 h-[1px] w-8 bg-jade/40" />
         </div>
         
@@ -41,8 +41,8 @@ export const TrustStrip = () => {
 
         <div className="items-center gap-4 border-l border-white/10 pl-8 hidden lg:flex">
           <div className="flex flex-col text-right">
-            <span className="text-jade text-[0.55rem] font-mono tracking-widest uppercase">AML/KYC Compliant</span>
-            <Label className="text-[0.4rem] opacity-30 mt-1 uppercase">Standard Global Governance</Label>
+            <span className="text-jade text-[0.55rem] font-mono tracking-widest uppercase">Regulatory Compliance</span>
+            <Label className="text-[0.4rem] opacity-30 mt-1 uppercase">Governance & Compliance</Label>
           </div>
           <div className="w-1.5 h-1.5 rounded-full bg-jade animate-pulse" />
         </div>

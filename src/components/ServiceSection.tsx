@@ -13,35 +13,35 @@ const PILLARS = [
     title: 'Project Finance',
     tagline: 'Infrastructure Development',
     description: 'Project finance is key to infrastructure development in Africa. Areas of specialisation include mining, energy, transport, telecommunications and infrastructure.',
-    metric: 'MINING // ENERGY'
+    metric: 'MINING & ENERGY'
   },
   {
     id: '02',
     title: 'Export And Pre-Export Finance',
     tagline: 'Finance Facilitation',
     description: 'End-to-end finance facilitation that covers all bases from point of production to delivery at destination. Access to blue-chip financial facilities and longstanding, continent-wide relationships.',
-    metric: 'TRADE // CAPITAL'
+    metric: 'TRADE & CAPITAL'
   },
   {
     id: '03',
     title: 'Debt Resolution',
     tagline: 'Negotiated Solutions',
     description: 'Africa Advisory is well positioned to negotiate solutions for external creditors and suppliers.',
-    metric: 'SECURED // SETTLED'
+    metric: 'SECURED DEBT'
   },
   {
     id: '04',
     title: 'Entrepreneurial Development',
     tagline: 'SME Initiatives',
     description: 'We believe that the future of business development lies with the development of entrepreneurs. In association with EBN Africa, Africa Advisory supports developing incubators focused on SME initiatives.',
-    metric: 'SCALE // EXIT'
+    metric: 'SCALE & EXIT'
   },
   {
     id: '05',
     title: 'Crowdfunding',
     tagline: 'Socially Beneficial',
     description: 'Africa Advisory has established a Crowd Funding platform linked into major European platforms. The focus is development of socially beneficial SME development.',
-    metric: 'LIQUIDITY // FLOW'
+    metric: 'LIQUIDITY FLOW'
   },
   {
     id: '06',
@@ -54,7 +54,7 @@ const PILLARS = [
 
 export const ServiceSection = () => {
   return (
-    <section className="section bg-[#F8F6F3] border-t border-black/5 relative overflow-hidden">
+    <section data-nav-light="true" className="section bg-[#F8F6F3] border-t border-black/5 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.05] pointer-events-none grayscale mix-blend-multiply">
         <Image 
           src="/assets/service.png" 
@@ -86,7 +86,7 @@ export const ServiceSection = () => {
               className="mask-reveal"
             >
               <PretextHeader 
-                text="Strategic Solutions for High-Intent Capital."
+                text="Trade and Project Finance Advisory."
                 fontSize={64}
                 color="#0D1212"
                 maxWidth={600}
@@ -97,7 +97,7 @@ export const ServiceSection = () => {
           <div className="col-span-12 md:col-start-8 md:col-span-5 flex items-end">
             <motion.div variants={VARIANTS.RISE_REVEAL} transition={{ delay: 0.4 }}>
               <Body className="text-[#0D1212]">
-                We provide the execution layer for complex mandates. Our approach is defined by restraint, geopolitical precision, and a commitment to unlocking unusual value across the continent.
+                We provide the project infrastructure for complex mandates. Our approach is defined by market experience and a commitment to unlocking significant value across the continent.
               </Body>
             </motion.div>
           </div>
@@ -158,7 +158,7 @@ export const ServiceSection = () => {
 
                 <div className="relative z-10 flex justify-between items-end border-t border-black/10 pt-8">
                   <Tabular className="text-[0.65rem] text-brand-gold font-bold uppercase tracking-widest">{pillar.metric}</Tabular>
-                  <Label className="text-[0.65rem] text-brand-teal font-bold uppercase group-hover:text-brand-teal transition-colors tracking-widest">Strategic Logic</Label>
+                  <Label className="text-[0.65rem] text-brand-teal font-bold uppercase group-hover:text-brand-teal transition-colors tracking-widest">Execution Detail</Label>
                 </div>
 
                 <div className="absolute -bottom-8 -right-8 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity">

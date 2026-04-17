@@ -137,17 +137,17 @@ export const Hero = () => {
               transition={{ delay: 2.0, duration: 1 }}
               className="mb-12"
             >
-              <Sovereign>Africa's Dealmaker</Sovereign>
+              <Sovereign>Expert Africa Advisory</Sovereign>
             </motion.div>
 
             {/* Stage 1: Keywords using Pretext for S-tier rendering */}
-            <div className="flex flex-col md:flex-row items-center justify-center gap-y-10 md:gap-x-6 mb-20 w-full max-w-5xl mx-auto px-4 overflow-visible">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-y-10 md:gap-x-6 mb-20 w-full max-w-5xl mx-auto px-4 overflow-visible min-h-[160px] md:min-h-[200px]">
               {[
                 { text: "Simple.", weight: 900, num: "01" },
                 { text: "Practical.", weight: 600, num: "02" },
                 { text: "Workable.", weight: 400, num: "03" }
               ].map((word, i) => (
-                <div key={word.text} className="flex flex-col items-center">
+                <div key={word.text} className="flex flex-col items-center min-w-[200px]">
                   <motion.div 
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -211,7 +211,7 @@ export const Hero = () => {
                 className="group relative w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 bg-jade text-base-obsidian font-semibold text-[0.6rem] md:text-[0.7rem] uppercase tracking-[0.4em] transition-all"
                 onClick={() => {}}
               >
-                AFRICAN SOLUTIONS FOR AFRICA
+                Solutions for the African Continent
                 <div className="absolute -inset-1 border border-white/10 scale-105 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-700" />
               </motion.button>
               
