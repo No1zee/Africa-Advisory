@@ -4,6 +4,7 @@ interface TypographyProps {
   children: React.ReactNode;
   className?: string;
   as?: React.ElementType;
+  htmlFor?: string;
 }
 
 export const Display: React.FC<TypographyProps> = ({ 
@@ -12,7 +13,7 @@ export const Display: React.FC<TypographyProps> = ({
   as: Component = 'h1' 
 }) => {
   return (
-    <Component className={`font-display font-normal tracking-[-0.03em] leading-[0.9] ${className}`}>
+    <Component className={`font-display text-white transition-colors duration-500 ${className}`}>
       {children}
     </Component>
   );
@@ -24,7 +25,7 @@ export const Sovereign: React.FC<TypographyProps> = ({
   as: Component = 'h2' 
 }) => {
   return (
-    <Component className={`font-display font-normal uppercase tracking-[0.4em] text-[0.9rem] md:text-[1rem] text-jade/80 ${className}`}>
+    <Component className={`font-display font-semibold transition-colors duration-500 ${className}`}>
       {children}
     </Component>
   );
@@ -36,7 +37,7 @@ export const Body: React.FC<TypographyProps> = ({
   as: Component = 'p' 
 }) => {
   return (
-    <Component className={`font-body font-light leading-relaxed text-foreground/80 ${className}`}>
+    <Component className={`font-body font-normal leading-relaxed text-[#8A8A8A] ${className}`}>
       {children}
     </Component>
   );
@@ -45,12 +46,17 @@ export const Body: React.FC<TypographyProps> = ({
 export const Label: React.FC<TypographyProps> = ({ 
   children, 
   className = '', 
-  as: Component = 'span' 
+  as: Component = 'span',
+  htmlFor
 }) => {
+  const FinalComponent = htmlFor ? 'label' : Component;
   return (
-    <Component className={`font-body text-[0.75rem] md:text-[0.85rem] tracking-[0.3em] uppercase opacity-70 ${className}`}>
+    <FinalComponent 
+      htmlFor={htmlFor}
+      className={`section-label ${className}`}
+    >
       {children}
-    </Component>
+    </FinalComponent>
   );
 };
 

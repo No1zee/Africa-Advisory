@@ -5,8 +5,13 @@ import { useEffect, useState } from 'react';
 export type UserTier = 'STRANGER' | 'ASSOCIATE' | 'PARTNER';
 
 export const useUserTier = () => {
-  const [tier, setTier] = useState<UserTier | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [state, setState] = useState<{
+    tier: UserTier | null;
+    isLoaded: boolean;
+  }>({
+    tier: null,
+    isLoaded: false
+  });
 
   useEffect(() => {
     // Check localStorage for visit history
@@ -16,13 +21,14 @@ export const useUserTier = () => {
 
     const now = Date.now();
     let visitCount = parseInt(visitCountStr || '0');
+    let resolvedTier: UserTier = 'STRANGER';
 
     // 1. If no first visit, set it and categorize as STRANGER
     if (!firstVisit) {
       localStorage.setItem('aa_first_visit', now.toString());
       localStorage.setItem('aa_visit_count', '1');
       localStorage.setItem('aa_last_visit', now.toString());
-      setTier('STRANGER');
+      resolvedTier = 'STRANGER';
     } else {
       // 2. Increment visit count (only once per session-ish or every 4 hours)
       const lastVisitTime = parseInt(lastVisit || '0');
@@ -36,16 +42,17 @@ export const useUserTier = () => {
 
       // 3. Determine Tier
       if (visitCount === 1) {
-        setTier('STRANGER');
+        resolvedTier = 'STRANGER';
       } else if (visitCount >= 10 || (now - parseInt(firstVisit) > 7 * 24 * 60 * 60 * 1000 && visitCount >= 3)) {
-        setTier('PARTNER');
+        resolvedTier = 'PARTNER';
       } else {
-        setTier('ASSOCIATE');
+        resolvedTier = 'ASSOCIATE';
       }
     }
-    
-    setIsLoaded(true);
+    requestAnimationFrame(() => {
+      setState({ tier: resolvedTier, isLoaded: true });
+    });
   }, []);
 
-  return { tier, isLoaded };
+  return state;
 };

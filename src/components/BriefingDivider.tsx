@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Label } from './Typography';
 
@@ -13,9 +13,9 @@ export const BriefingDivider = ({
   label = "", 
   className = "" 
 }: BriefingDividerProps) => {
-  const [mounted, setMounted] = React.useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true);
   }, []);
 
@@ -39,7 +39,7 @@ export const BriefingDivider = ({
         viewport={{ once: true }}
         transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
         style={{ transformOrigin: "left center" }}
-        className="h-[0.5px] w-full bg-gold/20"
+        className="h-[0.5px] w-full bg-foreground/10"
       />
       
     </div>

@@ -36,6 +36,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Antigravity / Dev Cleanup
+*.log
+obsidian_test.js
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

@@ -7,7 +7,7 @@ export const ArchitecturalGrid = () => {
   return (
     <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
       {/* Vertical Lines */}
-      <div className="grid-line-v-jade left-[5%]" />
+      <div className="grid-line-v-teal left-[5%]" />
       <motion.div 
         className="grid-line-v left-[25%]" 
         initial={{ opacity: 0 }}
@@ -16,7 +16,7 @@ export const ArchitecturalGrid = () => {
       />
       <div className="grid-line-v left-[50%]" />
       <motion.div 
-        className="grid-line-v-jade left-[75%]" 
+        className="grid-line-v-teal left-[75%]" 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 2, delay: 0.7 }}
@@ -24,9 +24,9 @@ export const ArchitecturalGrid = () => {
       <div className="grid-line-v left-[95%]" />
 
       {/* Horizontal Lines */}
-      <div className="grid-line-h-jade top-[10%]" />
+      <div className="grid-line-h-teal top-[10%]" />
       <motion.div 
-        className="grid-line-h-jade top-[40%]" 
+        className="grid-line-h-teal top-[40%]" 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 2, delay: 0.6 }}

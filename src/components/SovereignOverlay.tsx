@@ -1,26 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 export const SovereignOverlay = () => {
   const { scrollYProgress } = useScroll();
-  const [mounted, setMounted] = useState(false);
-  const [coords, setCoords] = useState({ lat: "0.0000° N", lon: "0.0000° E" });
-
-  useEffect(() => {
-    setMounted(true);
-    const unsubscribe = scrollYProgress.on("change", (v) => {
-      // Subtle coordinate shift based on scroll for "live tracking" feel
-      const lat = (v * 30).toFixed(4);
-      const lon = (v * 45).toFixed(4);
-      setCoords({ 
-        lat: `${lat}° N`, 
-        lon: `${lon}° E` 
-      });
-    });
-    return () => unsubscribe();
-  }, [scrollYProgress]);
+  const latValue = useTransform(scrollYProgress, (v) => `${(v * 30).toFixed(4)}° N`);
+  const lonValue = useTransform(scrollYProgress, (v) => `${(v * 45).toFixed(4)}° E`);
 
   return (
     <>
@@ -52,7 +38,7 @@ export const SovereignOverlay = () => {
         <div className="flex justify-between">
           <div className="flex flex-col gap-1" />
           <div className="text-right">
-            <span>{coords.lat}</span>
+            <motion.span>{latValue}</motion.span>
           </div>
         </div>
         
@@ -61,7 +47,7 @@ export const SovereignOverlay = () => {
             <span>AFRICAN ADVISORY</span>
           </div>
           <div className="text-right">
-            <span>{coords.lon}</span>
+            <motion.span>{lonValue}</motion.span>
           </div>
         </div>
       </div>

@@ -19,7 +19,7 @@ export const CinematicDivider = () => {
   return (
     <section 
       ref={containerRef} 
-      className="relative h-[80dvh] w-full overflow-hidden bg-base-obsidian border-y border-white/5"
+      className="relative h-[70dvh] w-full overflow-hidden bg-base-obsidian border-y border-white/5"
     >
       {/* Cinematic Background Video */}
       <motion.div 
@@ -44,7 +44,7 @@ export const CinematicDivider = () => {
           style={{ opacity, y: textY }}
           className="max-w-3xl"
         >
-          <Label className="text-brand-teal mb-6 uppercase tracking-[0.5em] font-semibold opacity-60">
+          <Label className="text-[#00B4A6]/70 mb-6 uppercase tracking-[0.5em] font-semibold">
             Regional Perspective
           </Label>
           <Display as="h2" className="text-4xl md:text-6xl text-secondary-parchment italic font-light leading-tight">
@@ -52,11 +52,25 @@ export const CinematicDivider = () => {
             <span className="opacity-70">Landscape.</span>
           </Display>
           
+          {/* Stat overlay — earns its place */}
+          <div className="flex gap-12 md:gap-16 justify-center mt-12">
+            {[
+              { value: "$32B+", label: "Capital Facilitated" },
+              { value: "40+", label: "Years on the Continent" },
+              { value: "14", label: "Markets Served" },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center">
+                <p className="font-display text-3xl font-bold text-[#00B4A6]">{stat.value}</p>
+                <p className="text-[10px] tracking-[0.25em] text-white/50 uppercase mt-1">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+
           <motion.div 
             initial={{ width: 0 }}
             whileInView={{ width: 80 }}
             transition={{ duration: 1.5, delay: 0.5 }}
-            className="h-px bg-brand-teal/40 mx-auto mt-12"
+            className="h-px bg-[#00B4A6]/30 mx-auto mt-12"
           />
         </motion.div>
       </div>

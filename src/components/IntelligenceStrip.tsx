@@ -4,24 +4,24 @@ import React from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Tabular, Label } from './Typography';
 import { TRANSITIONS, VARIANTS } from './Motion';
-
-const mandates = [
-  { label: 'Energy & Sovereign Debt', value: '$1.2B' },
-  { label: 'Trade Corridor Projects', value: '$450M' },
-  { label: 'Infrastructure Development', value: '$820M' },
-  { label: 'Agri-Tech & Growth', value: '$120M' },
-  { label: 'Regional Transit', value: '$2.1B' }
-];
+import initialData from '@/data/intelligence.json';
 
 export const IntelligenceStrip = () => {
+  const [data, setData] = React.useState(initialData);
   const [index, setIndex] = React.useState(0);
 
+  // Auto-refresh stats if mandates exist
+  const mandates = data.mandates || [];
+
   React.useEffect(() => {
+    if (mandates.length === 0) return;
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % mandates.length);
     }, 4000);
     return () => clearInterval(timer);
-  }, []);
+  }, [mandates.length]);
+
+  if (mandates.length === 0) return null;
 
   const current = mandates[index];
 
@@ -35,7 +35,7 @@ export const IntelligenceStrip = () => {
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <Label className="text-brand-teal font-semibold flex-shrink-0 tracking-[0.4em]">
+            <Label className="text-[#00B4A6]/70 font-semibold flex-shrink-0 tracking-[0.4em]">
               STRATEGIC ADVISORY PORTFOLIO
             </Label>
           </motion.div>
@@ -51,7 +51,7 @@ export const IntelligenceStrip = () => {
                 transition={TRANSITIONS.RESTRAINED}
                 className="absolute inset-0 flex items-center gap-8"
               >
-                <Tabular className="text-lg font-medium tracking-wide text-brand-gold">
+                <Tabular className="text-lg font-medium tracking-wide text-[#00B4A6]">
                   {current.value}
                 </Tabular>
                 <Label className="text-[0.7rem] text-white/70 uppercase tracking-widest whitespace-nowrap">

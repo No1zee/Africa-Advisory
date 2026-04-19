@@ -2,7 +2,7 @@ import { Instrument_Serif, Work_Sans } from "next/font/google";
 import { Navigator } from "@/components/Navigator";
 import { RevealManager } from "@/components/RevealManager";
 import { Pretext } from "@/components/Pretext";
-
+import { DotNav } from "@/components/DotNav";
 import { SovereignOverlay } from "@/components/SovereignOverlay";
 import "./globals.css";
 
@@ -10,12 +10,14 @@ const instrumentSerif = Instrument_Serif({
   weight: ["400"],
   subsets: ["latin"],
   variable: "--font-display",
+  display: 'swap',
 });
 
 const workSans = Work_Sans({
   weight: ["200", "300", "400", "500", "600", "700", "800"],
   subsets: ["latin"],
   variable: "--font-body",
+  display: 'swap',
 });
 
 import type { Metadata, Viewport } from "next";
@@ -44,6 +46,7 @@ export default function RootLayout({
         <Pretext>
           <SovereignOverlay />
           <Navigator />
+          <DotNav />
           <RevealManager />
           <main id="main-content">
             {children}

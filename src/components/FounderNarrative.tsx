@@ -1,142 +1,225 @@
 "use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Display, Body, Label, Tabular } from './Typography';
-import { VARIANTS, TRANSITIONS, Counter } from './Motion';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Display, Label, Body } from './Typography';
+import Image from 'next/image';
 
-const institutions = [
-  { name: 'Standard Bank', role: 'Trade & Project Finance' },
-  { name: 'Amro Bank', role: 'Infrastructure Finance' }
+const CREDENTIAL_BADGES = [
+  { value: '40+', label: 'Years of Advisory' },
+  { value: "Africa's Dealmaker", label: 'Industry Recognition' },
+  { value: 'Est. 1984', label: 'Johannesburg' },
+];
+
+// Triple-set for seamless marquee loop
+const INSTITUTIONS = [
+  'BIAO',
+  'Standard Bank',
+  'Amro Bank',
+  'UBS',
+  'HSBC',
+  'UK Government Advisory Committee',
+  'Paris Club',
+  'London Club',
+  'DFI Network',
+];
+
+const NARRATIVE_SECTIONS = [
+  {
+    heading: 'Institutional Foundations',
+    body: `Bruce Jewels's career began at the former Bank International de l'Afrique Occidentale (BIAO), one of the continent's oldest commercial banking institutions. He subsequently held senior positions at Amro Bank, UBS, HSBC, and Standard Bank — accumulating the kind of institutional depth that defines the world's most accomplished advisory practitioners.`,
+  },
+  {
+    heading: 'Sovereign Connectivity',
+    body: `In recognition of his expertise and continental relationships, Bruce was appointed to the British Government's Advisory Committee on African Trade and Investment. This appointment reflects both deep technical competence and the exceptional trust placed in him by governments and multilateral institutions.`,
+  },
+  {
+    heading: "Africa's Dealmaker",
+    body: `Over four decades, Bruce Jewels has cultivated an unmatched network across francophone and anglophone Africa alike — navigating the distinct regulatory, cultural, and political landscapes of each sub-region with precision.`,
+  },
 ];
 
 export const FounderNarrative = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const portraitRef = useRef<HTMLDivElement>(null);
+
+  // Portrait counter-scroll parallax
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+  // Image moves slightly slower than scroll = depth effect
+  const portraitY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+
   return (
-    <section className="section bg-secondary-parchment text-base-obsidian overflow-hidden">
-      <div className="container">
-        <div className="editorial-grid items-start">
-          {/* Portrait & Core Identity */}
-          <motion.div 
-            variants={VARIANTS.STAGGER_CONTAINER}
-            initial="hidden"
-            whileInView="visible"
+    <section ref={sectionRef} id="leadership" className="relative py-28 lg:pt-40 lg:pb-20 bg-[hsl(216_12%_8%)] overflow-hidden">
+      {/* Section Header */}
+      <div className="container mb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="col-span-12 lg:col-span-5 mb-24 lg:mb-0"
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <motion.div 
-              variants={VARIANTS.RISE_REVEAL}
-              className="relative aspect-[3/4] bg-base-obsidian overflow-hidden mb-12 border border-foreground/10"
-            >
-              <img 
-                src="/assets/founder.png" 
-                alt="Bruce Jewels - Africa's Dealmaker" 
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              {/* Subtle glass reflection overlay */}
-              <div className="absolute inset-0 bg-white/5 pointer-events-none" />
-              {/* Brushed metal texture overlay */}
-              <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/brushed-alum.png')]" />
-              <div className="absolute inset-x-0 bottom-0 p-8 md:p-12 bg-gradient-to-t from-base-obsidian via-base-obsidian/40 to-transparent">
-                <Display as="h3" className="text-secondary-parchment text-4xl mb-2">Bruce Jewels</Display>
-                <Label className="text-jade font-semibold tracking-widest uppercase text-[0.6rem]">Principal & Founder</Label>
-              </div>
-            </motion.div>
-            
-            <div className="space-y-8">
-              <motion.div variants={VARIANTS.RISE_REVEAL}>
-                <Label className="text-base-obsidian opacity-40 border-b border-base-obsidian/10 pb-4 block uppercase tracking-widest">Institutional Pedigree</Label>
-              </motion.div>
-              <div className="grid grid-cols-2 gap-8">
-                {institutions.map((inst, i) => (
-                  <motion.div 
-                    key={i} 
-                    variants={VARIANTS.RISE_REVEAL}
-                    transition={{ delay: i * 0.1 }}
-                    className="flex flex-col"
-                  >
-                    <span className="font-display text-lg mb-1">{inst.name}</span>
-                    <Label className="text-[0.55rem] opacity-60 leading-none">{inst.role}</Label>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
+            <Label className="text-[#00B4A6] tracking-[0.4em] text-[0.6rem] mb-4 block">
+              Leadership
+            </Label>
+            <Display as="h2" className="text-white text-4xl md:text-5xl lg:text-7xl leading-tight max-w-xl">
+              Bruce Jewels<br />
+              <span className="italic font-light text-white/50">Founder &amp; Principal</span>
+            </Display>
           </motion.div>
-
-          {/* The Narrative */}
-          <motion.div 
-            variants={VARIANTS.STAGGER_CONTAINER}
-            initial="hidden"
-            whileInView="visible"
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="col-span-12 lg:col-start-7 lg:col-span-6"
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="pb-2"
           >
-            <motion.div variants={VARIANTS.RISE_REVEAL}>
-              <Label className="text-jade mb-8 uppercase tracking-[0.2em] font-medium">Strategic Vision</Label>
-            </motion.div>
-            
-            <div className="mb-16">
-              <motion.div 
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={TRANSITIONS.EXQUISITE}
-              >
-                <Display as="h2" className="text-4xl md:text-5xl leading-tight mb-8 font-light italic">
-                  Over the last 40 years, Africa Advisory has built up a network of information, contact and influence with institutions, governments and companies internationally.
-                </Display>
-                <motion.div 
-                  initial={{ width: 0 }}
-                  whileInView={{ width: 96 }}
-                  transition={{ duration: 1, delay: 0.5 }}
-                  className="h-px bg-jade/30" 
-                />
-              </motion.div>
-            </div>
-
-            <div className="space-y-12">
-              <motion.div variants={VARIANTS.RISE_REVEAL} transition={{ delay: 0.2 }}>
-                <Body className="text-base-obsidian/90 text-xl md:text-2xl font-medium leading-snug max-w-[65ch]">
-                  Faced often with seemingly impossible deal-breaking restrictions and limitations, Africa Advisory has unlocked the door to solutions that never seemed possible.
-                </Body>
-              </motion.div>
-              
-              <motion.div variants={VARIANTS.RISE_REVEAL} transition={{ delay: 0.4 }}>
-                <Body className="text-base-obsidian/70 leading-relaxed font-body max-w-[65ch]">
-                  A broad network of relationships holds the key to many doors across a wide range of sectors and a broad geographic area in Africa's often complex, always enigmatic, business and investment environment.
-                </Body>
-              </motion.div>
-
-              <motion.div variants={VARIANTS.RISE_REVEAL} transition={{ delay: 0.6 }}>
-                <Body className="text-base-obsidian/70 leading-relaxed font-body max-w-[65ch]">
-                  Senior positions with BIAO, Amro Bank, Union Bank of Switzerland and the HSBC group allowed Mr. Jewels rare insight into the African environment. Valuable and in-depth experience was gained through a decade on the Africa Advisory Committee for the British Government.
-                </Body>
-              </motion.div>
-
-              <motion.div variants={VARIANTS.RISE_REVEAL} transition={{ delay: 0.7 }}>
-                <Body className="text-base-obsidian/70 leading-relaxed font-body max-w-[65ch]">
-                  He has painstakingly peeled the layers of Africa's intrigue, mystique and inscrutability and can justifiably claim to know corporate Africa from the inside out. In 2000, Mr. Jewels decided to establish an office in Johannesburg, believing South Africa is the engine room for much African activity.
-                </Body>
-              </motion.div>
-
-              <motion.div variants={VARIANTS.RISE_REVEAL} transition={{ delay: 0.8 }}>
-                <Body className="text-base-obsidian/70 leading-relaxed font-body max-w-[65ch]">
-                  He demonstrates a firm belief in providing African solutions for Africa — with in-depth knowledge of both Francophone and Anglophone territories. His ability to get the job done in ways that are often unique and groundbreaking has earned him the reputation of Africa's Dealmaker.
-                </Body>
-              </motion.div>
-
-              <div className="pt-12 grid grid-cols-2 gap-8 md:gap-12 border-t border-base-obsidian/10">
-                <motion.div variants={VARIANTS.RISE_REVEAL}>
-                  <Tabular className="text-4xl text-gold">40+</Tabular>
-                  <Label className="block mt-2 opacity-50 uppercase tracking-widest text-jade">Years Advisory</Label>
-                </motion.div>
-                <motion.div variants={VARIANTS.RISE_REVEAL} transition={{ delay: 0.2 }}>
-                  <Tabular className="text-4xl text-gold">32B</Tabular>
-                  <Label className="block mt-2 opacity-50 uppercase tracking-widest text-jade">Capital Facilitated</Label>
-                </motion.div>
-              </div>
-            </div>
+            <Body className="text-white/60 text-lg leading-relaxed max-w-lg italic border-l border-[#00B4A6]/40 pl-6">
+              Bruce Jewels leverages 40 years of institutional depth to bridge 
+              global liquidity with Africa&apos;s most ambitious mandates.
+            </Body>
           </motion.div>
         </div>
       </div>
+
+      {/* Always-On Institution Marquee */}
+      <div className="container mb-20">
+        <div className="border-y border-white/5 py-8 overflow-hidden">
+          <div className="relative [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+            <div className="animate-marquee-slow flex items-center gap-16 opacity-40 hover:opacity-70 transition-opacity duration-700">
+              {[...INSTITUTIONS, ...INSTITUTIONS, ...INSTITUTIONS].map((inst, i) => (
+                <React.Fragment key={i}>
+                  <span className="font-display text-[0.7rem] md:text-xs uppercase tracking-[0.4em] text-white whitespace-nowrap shrink-0">
+                    {inst}
+                  </span>
+                  <span className="text-[#00B4A6]/30 shrink-0 text-xs">◆</span>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Two-Column Profile */}
+      <div className="container grid grid-cols-1 lg:grid-cols-3 gap-16 lg:gap-24">
+        
+        {/* Left: Portrait with parallax + Credential Badges */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="lg:col-span-1 flex flex-col gap-10"
+        >
+          {/* Portrait with parallax depth */}
+          <div
+            ref={portraitRef}
+            className="relative aspect-[3/4.5] bg-white/[0.03] p-1 border border-white/10 group overflow-hidden"
+          >
+            <motion.div
+              className="absolute inset-0 overflow-hidden"
+              style={{ y: portraitY }}
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=1200&q=80"
+                alt="Bruce Jewels - Principal Advisor"
+                width={800}
+                height={1200}
+                className="w-full h-[115%] object-cover grayscale brightness-110 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-1000"
+                sizes="(max-width: 1024px) 100vw, 33vw"
+              />
+            </motion.div>
+            {/* Design accents */}
+            <div className="absolute top-4 right-4 text-white/20 font-mono text-[0.5rem] tracking-widest uppercase rotate-90 origin-right pointer-events-none">
+              Principal Advisor
+            </div>
+            {/* Edge glow */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+            {/* Hover teal tint */}
+            <div className="absolute inset-0 bg-[#00B4A6]/[0.04] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+          </div>
+
+          {/* Key Differentiators (Badges) */}
+          <div className="grid grid-cols-1 gap-6">
+            {CREDENTIAL_BADGES.map((badge, i) => (
+              <div key={i} className="group/badge">
+                <span className="font-display text-2xl text-white block group-hover/badge:text-[#00B4A6] transition-colors">
+                  {badge.value}
+                </span>
+                <span className="text-[0.5rem] tracking-[0.3em] text-white/30 mt-1 block group-hover/badge:text-white/50 transition-colors">
+                  {badge.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Right: Narrative Sections */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="lg:col-span-2 flex flex-col gap-12"
+        >
+          {NARRATIVE_SECTIONS.map((section, i) => (
+            <div key={i} className="flex flex-col gap-4">
+              {/* Subheading */}
+              <div className="flex items-center gap-3">
+                <div className="w-4 h-px bg-[#00B4A6]/40" />
+                <span className="text-[0.58rem] tracking-[0.3em] text-[#00B4A6]/70 font-semibold">
+                  {section.heading}
+                </span>
+              </div>
+
+              {i < NARRATIVE_SECTIONS.length - 1 ? (
+                <p className="text-white/60 text-base leading-[1.85] font-light">
+                  {section.body}
+                </p>
+              ) : (
+                <>
+                  <p className="text-white/60 text-base leading-[1.85] font-light">
+                    Over four decades, Bruce Jewels has cultivated an unmatched network across francophone and anglophone Africa alike — navigating the distinct regulatory, cultural, and political landscapes of each sub-region with precision. He has opened dialogues, structured mandates, and delivered financing solutions in situations where others could not even secure a meeting.
+                  </p>
+
+                  {/* Pull-Quote Blockquote */}
+                  <motion.blockquote
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.3 }}
+                    className="relative border-l-2 border-[#00B4A6] pl-7 py-2 my-4"
+                  >
+                    <p className="font-display text-xl md:text-2xl text-white/85 italic leading-relaxed">
+                      &ldquo;He has painstakingly peeled the layers of African institutions and governments to get to the decision-makers.&rdquo;
+                    </p>
+                    <footer className="mt-4 text-[0.52rem] tracking-[0.25em] text-white/30">
+                      — Senior Counterparty, West African Sovereign Mandate
+                    </footer>
+                  </motion.blockquote>
+
+                  <p className="text-white/60 text-base leading-[1.85] font-light">
+                    It is this combination of institutional pedigree, sovereign network, and deal-closing acuity that defines the Africa Advisory platform.
+                  </p>
+                </>
+              )}
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
+      <motion.div
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+        style={{ transformOrigin: 'left center' }}
+        className="container mt-16 h-px bg-gradient-to-r from-[#00B4A6]/25 via-white/5 to-transparent"
+      />
     </section>
   );
 };

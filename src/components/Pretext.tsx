@@ -15,37 +15,51 @@ const INTEL_STRINGS = [
   "LOCATION: GEOSPATIAL_AFRICA"
 ];
 
+const IntelTicker = () => {
+  const [intelIndex, setIntelIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIntelIndex((prev) => (prev + 1) % INTEL_STRINGS.length);
+    }, 400);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="absolute bottom-12 left-12 font-mono text-[10px] tracking-[0.2em] uppercase text-accent animate-intel-flicker">
+      {INTEL_STRINGS[intelIndex]}
+    </div>
+  );
+};
+
 export const Pretext = ({ children }: { children: React.ReactNode }) => {
   const { tier, isLoaded } = useUserTier();
   const [isVisible, setIsVisible] = useState(false);
-  const [intelIndex, setIntelIndex] = useState(0);
 
   useEffect(() => {
     if (!isLoaded) return;
 
     // Only show if STRANGER and haven't seen in this session
-    if (tier === 'STRANGER' && !sessionStorage.getItem('aa_has_seen_prologue')) {
-      setIsVisible(true);
-      sessionStorage.setItem('aa_has_seen_prologue', 'true');
+    const hasSeen = sessionStorage.getItem('aa_has_seen_prologue');
+    if (tier === 'STRANGER' && !hasSeen) {
+      // Use a safe gap to avoid cascading render warning
+      const revealTimeout = setTimeout(() => {
+        setIsVisible(true);
+        sessionStorage.setItem('aa_has_seen_prologue', 'true');
+      }, 0);
+
+      // Final reveal timeout
+      const hideTimer = setTimeout(() => {
+        setIsVisible(false);
+      }, 2800);
+
+      return () => {
+        clearTimeout(revealTimeout);
+        clearTimeout(hideTimer);
+      };
     } else {
-      setIsVisible(false);
-      return;
+      requestAnimationFrame(() => setIsVisible(false));
     }
-
-    // Intelligence ticker cycle
-    const interval = setInterval(() => {
-      setIntelIndex((prev) => (prev + 1) % INTEL_STRINGS.length);
-    }, 400);
-
-    // Final reveal timeout
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-    }, 2800);
-
-    return () => {
-      clearTimeout(timer);
-      clearInterval(interval);
-    };
   }, [isLoaded, tier]);
 
   return (
@@ -80,10 +94,8 @@ export const Pretext = ({ children }: { children: React.ReactNode }) => {
               />
             </svg>
 
-            {/* Intelligence Ticker */}
-            <div className="absolute bottom-12 left-12 font-mono text-[10px] tracking-[0.2em] uppercase text-accent animate-intel-flicker">
-              {INTEL_STRINGS[intelIndex]}
-            </div>
+            {/* Intelligence Ticker (Isolated State) */}
+            <IntelTicker />
 
             <div className="absolute top-12 right-12 sculptural-label opacity-30">
               Est. MMXXVI

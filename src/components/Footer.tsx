@@ -2,72 +2,100 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Display, Body, Label, Tabular } from './Typography';
+import { Display } from './Typography';
+
+const HUBS = ['Johannesburg', 'Lagos', 'London', 'Nairobi'];
+const SOLUTIONS = ['Project Finance', 'Trade Finance', 'Sovereign Debt', 'Capital Markets', 'Strategic Advisory'];
+const LEGAL = ['Privacy Policy', 'Terms of Service', 'NDA Framework'];
 
 export const Footer = () => {
   return (
-    <footer 
-      className="section pt-48 pb-24 bg-base-obsidian text-secondary-parchment border-t border-white/5 overflow-hidden relative safe-pb-footer"
-    >
-      <div className="container relative">
-        {/* Top Branding Section */}
-        <div className="flex flex-col md:flex-row justify-between items-start mb-32 gap-12">
-          <div className="max-w-xl">
-             <Display className="text-4xl md:text-5xl lg:text-6xl text-gold/90 mb-8 leading-none tracking-tighter uppercase italic font-light">
-                Africa <span className="text-secondary-parchment/80 not-italic font-medium">Advisory.</span>
-             </Display>
-             <Body className="text-sm md:text-base opacity-40 max-w-sm uppercase tracking-[0.2em] leading-relaxed">
-                Expert trade and project finance advisory across the African continent since 1984.
-             </Body>
+    <footer className="relative bg-[hsl(216_12%_8%)] border-t border-[#00B4A6]/20 overflow-hidden">
+      {/* Main grid */}
+      <div className="container py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
+          
+          {/* Brand Column */}
+          <div className="lg:col-span-1">
+            <h2 className="font-display text-3xl md:text-3xl text-white leading-tight mb-4">
+              Africa<br />
+              <em className="font-light text-[#00B4A6] not-italic">Advisory.</em>
+            </h2>
+            <p className="text-[#8A8A8A] text-xs mt-5 leading-relaxed font-body font-normal uppercase tracking-widest opacity-60">
+              Africa's Dealmaker since 1984.<br />
+              Johannesburg · Lagos · London · Nairobi
+            </p>
+            <div className="mt-8 h-px w-12 bg-[#00B4A6]/40" />
           </div>
-          <div className="flex gap-12">
-             <div className="w-12 h-12 border border-jade/20 rounded-full flex items-center justify-center text-jade opacity-40 hover:opacity-100 transition-opacity">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" />
-                </svg>
-             </div>
+
+          {/* Hubs */}
+          <div>
+            <p className="text-[0.55rem] tracking-[0.35em] text-white/30 font-bold mb-7 uppercase">Hubs</p>
+            <div className="flex flex-col gap-3">
+              {HUBS.map((hub) => (
+                <span key={hub} className="text-[#8A8A8A] text-sm font-body font-normal hover:text-white transition-colors cursor-default">
+                  {hub}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Solutions */}
+          <div>
+            <p className="text-[0.55rem] tracking-[0.35em] text-white/30 font-bold mb-7 uppercase">Services</p>
+            <div className="flex flex-col gap-3">
+              {SOLUTIONS.map((sol) => (
+                <a key={sol} href="#services" className="text-[#8A8A8A] text-sm font-body font-normal hover:text-[#00B4A6] transition-colors">
+                  {sol}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Contact Column */}
+          <div>
+            <p className="text-[0.55rem] tracking-[0.35em] text-white/30 font-bold mb-7 uppercase">Contact</p>
+            <div className="flex flex-col gap-4">
+              <div>
+                <p className="text-[0.48rem] uppercase tracking-[0.2em] text-white/25 mb-1">Principal</p>
+                <p className="text-[#8A8A8A] text-sm font-normal">Bruce Jewels</p>
+              </div>
+              <div>
+                <p className="text-[0.48rem] uppercase tracking-[0.2em] text-white/25 mb-1">Email</p>
+                <a href="mailto:bruce@africaadvisory.com" className="text-[#8A8A8A] text-sm hover:text-[#00B4A6] transition-colors font-normal">
+                  bruce@africaadvisory.com
+                </a>
+              </div>
+              <div className="mt-2">
+                <a
+                  href="#contact"
+                  className="inline-block bg-[#00B4A6] text-white text-[0.6rem] uppercase tracking-[0.2em] font-bold px-5 py-3 hover:bg-[#00D1C1] transition-colors duration-200"
+                >
+                  Schedule a Call
+                </a>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div className="editorial-grid gap-y-24 gap-x-12 mb-32 items-start border-t border-white/5 pt-24">
-          <div className="col-span-12 md:col-span-6 lg:col-span-3">
-             <Label className="block mb-12 opacity-30 uppercase tracking-[0.5em] text-[0.5rem] font-bold">Our Locations</Label>
-             <div className="flex flex-col space-y-6">
-                {['Johannesburg', 'Nairobi', 'Lagos', 'London (Desk)'].map(hub => (
-                  <div key={hub} className="group cursor-default">
-                    <span className="font-body text-[0.65rem] text-secondary-parchment/60 group-hover:text-jade transition-colors uppercase tracking-[0.3em]">{hub}</span>
-                    <div className="h-px w-0 group-hover:w-8 bg-jade transition-all duration-500 mt-1" />
-                  </div>
-                ))}
-             </div>
+      {/* Legal bar */}
+      <div className="border-t border-white/[0.06]">
+        <div className="container py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+          <span className="text-[0.58rem] tracking-[0.25em] text-white/20 uppercase font-medium">
+            © 2016–2026 Africa Advisory Ltd. All Rights Reserved.
+          </span>
+          <div className="flex items-center gap-8">
+            {LEGAL.map((item, i) => (
+              <Link
+                key={item}
+                href="#"
+                className="text-[0.55rem] tracking-[0.2em] text-white/20 uppercase hover:text-[#00B4A6] transition-colors font-medium"
+              >
+                {item}
+              </Link>
+            ))}
           </div>
-
-          <div className="col-span-12 md:col-span-6 lg:col-span-3">
-             <Label className="block mb-12 opacity-30 uppercase tracking-[0.5em] text-[0.5rem] font-bold">Mandates</Label>
-             <div className="flex flex-col space-y-6">
-                {['Project Finance', 'Trade Finance', 'Debt Resolution', 'Legal & Compliance'].map(link => (
-                  <a key={link} href="#" className="font-body text-[0.65rem] text-secondary-parchment/60 hover:text-gold transition-colors uppercase tracking-[0.3em] block">{link}</a>
-                ))}
-             </div>
-          </div>
-
-          <div className="col-span-12 lg:col-span-6">
-             <Label className="block mb-12 opacity-30 uppercase tracking-[0.5em] text-[0.5rem] font-bold">About Africa Advisory</Label>
-             <p className="font-body text-[0.7rem] text-secondary-parchment/40 max-w-lg uppercase tracking-[0.25em] leading-[1.8] italic">
-                Over four decades of specialised experience facilitating trade and infrastructure development across the continent — delivering bespoke solutions for African markets.
-             </p>
-          </div>
-        </div>
-
-        <div className="flex flex-col lg:flex-row justify-between items-center gap-12 pt-12 border-t border-white/5 opacity-30">
-           <div className="flex flex-col md:flex-row items-center gap-8">
-             <Label className="text-[0.55rem] uppercase tracking-[0.4em]">© 2016‐2024 Africa Advisory Ltd.</Label>
-             <div className="hidden md:block w-1.5 h-1.5 rounded-full bg-gold/50" />
-             <Link href="/privacy" className="text-[0.55rem] uppercase tracking-[0.4em] hover:text-gold transition-colors">Privacy Policy</Link>
-             <Link href="/terms" className="text-[0.55rem] uppercase tracking-[0.4em] hover:text-gold transition-colors">Terms of Service</Link>
-           </div>
-           
-
         </div>
       </div>
     </footer>

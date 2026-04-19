@@ -1,169 +1,226 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Display, Body, Label, Tabular } from './Typography';
+import { Display, Label, Body } from './Typography';
+
+type FormState = 'idle' | 'sending' | 'sent' | 'error';
+
+const CONTACT_DETAILS = [
+  { label: 'Principal', value: 'Bruce Jewels' },
+  { label: 'Jurisdiction', value: 'Johannesburg · London' },
+  { label: 'Response Time', value: 'Within 2 business days' },
+];
+
+const TRUST_INDICATORS = [
+  'Sovereign mandates welcomed',
+  'Institutional confidentiality by default',
+  'Non-disclosure frameworks available on request',
+];
 
 export const ContactCTA = () => {
+  const [formState, setFormState] = useState<FormState>('idle');
+  const [formData, setFormData] = useState({
+    name: '',
+    organisation: '',
+    email: '',
+    mandate: 'Project Finance',
+    message: '',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormState('sending');
+    await new Promise(r => setTimeout(r, 1800));
+    setFormState('sent');
+  };
+
   return (
-    <>
-    <section id="contact" data-nav-light="true" className="section golden-hour text-base-obsidian py-32 lg:py-64 border-t border-black/5 relative overflow-hidden">
-      <div className="golden-hour-glow" />
-      {/* Dynamic Background Noise/Graphic */}
-      <div className="absolute inset-0 opacity-[0.05] pointer-events-none mix-blend-multiply">
-        <div className="absolute inset-0 bg-[url('/assets/hero.png')] bg-cover bg-center grayscale" />
-      </div>
+    <section id="contact" className="relative pt-16 lg:pt-20 pb-28 lg:pb-40 bg-[hsl(216_12%_8%)] overflow-hidden">
+      {/* Subtle corner glow */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#00B4A6]/[0.04] rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="container relative z-10 editorial-grid">
-        <div className="col-span-12 lg:col-start-2 lg:col-span-10 flex flex-col items-center">
+      <div className="container relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-11 gap-16 lg:gap-24">
           
-          <div className="text-center mb-24 max-w-3xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <Label className="text-brand-gold mb-6 uppercase tracking-[0.4em] font-bold block">The Horizon of Opportunity</Label>
-              <Display as="h2" className="text-5xl md:text-8xl mb-8 leading-[0.9] tracking-tighter text-base-obsidian">
-                Get in <span className="italic font-light text-brand-gold/60">Touch.</span>
-              </Display>
-              <Body className="text-base md:text-xl text-base-obsidian/60 max-w-xl mx-auto leading-relaxed italic border-l border-brand-gold/40 pl-6">
-                Connect with us to facilitate institutional requirements and unlock unusual value across the African continent.
-              </Body>
-            </motion.div>
-          </div>
-          
-          <motion.form 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={{
-              visible: { transition: { staggerChildren: 0.08 } }
-            }}
-            className="w-full grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 mb-24"
+          {/* ── Left: Copy + Contact Details ── */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 flex flex-col gap-10"
           >
-            {[
-              { label: "Full Name / Title", placeholder: "e.g. Director of Finance", type: "text" },
-              { label: "Organization", placeholder: "Institutional or Sovereign entity", type: "text" },
-              { label: "Mandate Type", type: "select", options: ["Project Finance", "Trade Finance", "Debt Resolution", "Market Execution", "Other Advisory"] },
-              { label: "Target Funding Size", placeholder: "e.g. $50M - $500M+", type: "text" }
-            ].map((field, i) => (
-              <motion.div 
-                key={i}
-                variants={{
-                  hidden: { opacity: 0, x: -10 },
-                  visible: { opacity: 1, x: 0 }
-                }}
-                className="flex flex-col gap-3 group"
-              >
-                <Label className="text-[0.55rem] text-base-obsidian opacity-40 uppercase tracking-[0.3em] font-bold group-focus-within:text-brand-gold group-focus-within:opacity-100 transition-all">
-                  {field.label}
-                </Label>
-                <div className="relative">
-                  {field.type === "select" ? (
-                    <select title="Mandate Type" className="w-full bg-black/[0.03] border-b border-black/10 p-4 font-body text-sm md:text-base focus:border-brand-gold outline-none transition-all appearance-none cursor-pointer hover:bg-black/5 text-base-obsidian">
-                      {field.options?.map(opt => <option key={opt} className="bg-white text-base-obsidian">{opt}</option>)}
-                    </select>
-                  ) : (
-                    <input 
-                      type={field.type} 
-                      className="w-full bg-black/[0.03] border-b border-black/10 p-4 font-body text-sm md:text-base focus:border-brand-gold outline-none transition-all placeholder:text-base-obsidian/20 hover:bg-black/5 text-base-obsidian" 
-                      placeholder={field.placeholder} 
-                    />
-                  )}
-                  <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-brand-gold group-focus-within:w-full transition-all duration-700 ease-out" />
-                </div>
-              </motion.div>
-            ))}
+            <div>
+              <Display as="h2" className="text-white text-3xl md:text-5xl lg:text-5xl leading-tight mb-6 uppercase tracking-tight font-bold">
+                ALL ENQUIRIES WELCOME REGARDING SOVEREIGN DEBT AND PROJECT FINANCE MANDATES.
+              </Display>
+              <Body className="text-[#8A8A8A] text-base leading-relaxed max-w-md">
+                Our team responds to institutional enquiries within 48 business hours. 
+                All communications are treated with strict confidentiality.
+              </Body>
+            </div>
 
-            <motion.div 
-              variants={{
-                hidden: { opacity: 0, y: 10 },
-                visible: { opacity: 1, y: 0 }
-              }}
-              className="flex flex-col gap-3 md:col-span-2 group"
-            >
-              <Label className="text-[0.55rem] text-base-obsidian opacity-40 uppercase tracking-[0.3em] font-bold group-focus-within:text-brand-gold group-focus-within:opacity-100 transition-all">
-                Brief Directional Context
-              </Label>
-              <div className="relative">
-                <textarea 
-                  className="w-full bg-black/[0.03] border-b border-black/10 p-4 font-body text-sm md:text-base focus:border-brand-gold outline-none transition-all h-40 resize-none placeholder:text-base-obsidian/20 hover:bg-black/5 text-base-obsidian" 
-                  placeholder="Summary of institutional requirements..." 
-                />
-                <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-brand-gold group-focus-within:w-full transition-all duration-700 ease-out" />
+            {/* Confidentiality Shield */}
+            <div className="flex items-center gap-3 text-white/40">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="shrink-0 text-[#00B4A6]/60">
+                <path d="M9 1.5L2.25 4.5V9C2.25 12.75 5.175 16.245 9 17.25C12.825 16.245 15.75 12.75 15.75 9V4.5L9 1.5Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
+                <path d="M6 9L8 11L12 7" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span className="text-[0.58rem] uppercase tracking-[0.2em]">
+                All enquiries treated with institutional confidentiality
+              </span>
+            </div>
+
+            {/* HQ & Coverage details */}
+            <div className="flex flex-col gap-10 border-l border-[#00B4A6]/20 pl-6 mt-4">
+              {/* HQ */}
+              <div>
+                <span className="text-white/60 text-sm leading-relaxed max-w-[200px] block">
+                  1st Floor, Block D, Melrose Arch, Johannesburg, 2196
+                </span>
               </div>
-            </motion.div>
-            
-            <motion.div 
-              variants={{
-                hidden: { opacity: 0 },
-                visible: { opacity: 1 }
-              }}
-              className="md:col-span-2 flex flex-col items-center pt-8"
-            >
-              <motion.button 
-                whileHover={{ scale: 1.02, backgroundColor: "#121417" }}
-                whileTap={{ scale: 0.98 }}
-                type="submit"
-                className="group relative px-24 py-7 bg-brand-gold text-white font-body text-[0.75rem] uppercase tracking-[0.5em] transition-all overflow-hidden shadow-2xl"
-              >
-                <span className="relative z-10">SUBMIT MANDATE</span>
-                <div className="absolute inset-0 bg-base-obsidian translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
-                <div className="absolute -inset-2 border border-brand-gold/20 scale-110 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-700" />
-              </motion.button>
               
-              <div className="mt-12 flex items-center gap-6 opacity-20">
-                <div className="h-px w-20 bg-base-obsidian" />
-                <span className="text-[0.5rem] uppercase tracking-[0.6em] whitespace-nowrap italic text-base-obsidian">Institutional Directives Only</span>
-                <div className="h-px w-20 bg-base-obsidian" />
-              </div>
-            </motion.div>
-          </motion.form>
-
-          <footer className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 pt-24 border-t border-black/10 items-start">
-            <div className="flex flex-col gap-6">
-              <Label className="text-brand-gold uppercase tracking-[0.4em] text-[0.6rem] font-bold">The Hub</Label>
-              <div className="space-y-4">
-                <p className="text-[0.7rem] leading-relaxed opacity-60 uppercase tracking-widest max-w-[200px] text-base-obsidian">
-                  Regent Hill Office Park, 68 Leslie Rd, Sandton, 2062
-                </p>
-                <div className="h-px w-12 bg-brand-gold/30" />
-                <Tabular className="text-brand-gold text-xs tracking-widest block font-bold">africadvise@icon.co.za</Tabular>
-              </div>
-            </div>
-            
-            <div className="flex flex-col gap-6">
-              <Label className="text-brand-gold uppercase tracking-[0.4em] text-[0.6rem] font-bold">Advisory Access</Label>
-              <div className="space-y-6">
-                <div>
-                  <p className="text-[0.55rem] opacity-40 uppercase tracking-widest mb-1 text-base-obsidian">Directorate</p>
-                  <p className="text-[0.75rem] font-display text-base-obsidian/80 font-medium">B. Jewels | +27 83 326 1070</p>
-                </div>
-                <div>
-                  <p className="text-[0.55rem] opacity-40 uppercase tracking-widest mb-1 text-base-obsidian">Sovereign Facilitation</p>
-                  <p className="text-[0.75rem] font-display text-base-obsidian/80 font-medium">E. Meda | +27 72 581 7097</p>
-                </div>
+              {/* Coverage */}
+              <div>
+                <span className="text-[0.65rem] uppercase tracking-[0.1em] text-white/50">
+                  SADC · ECOWAS · EAC · GCC & Asia Corridors
+                </span>
               </div>
             </div>
 
-            <div className="flex flex-col gap-6 lg:items-end lg:text-right">
-               <div className="w-12 h-12 border border-brand-gold/20 flex items-center justify-center opacity-40">
-                  <svg viewBox="0 0 100 100" className="w-6 h-6 stroke-brand-gold fill-none">
-                    <path d="M20 50 L50 20 L80 50 L50 80 Z" />
-                    <path d="M50 20 V80 M20 50 H80" />
+            {/* Direct Contact */}
+            <div className="flex flex-col gap-3 pt-6 border-t border-white/5">
+              <a href="mailto:bruce@africaadvisory.com" className="flex items-center gap-3 text-white/40 hover:text-[#00B4A6] transition-colors duration-300 group">
+                <span className="text-[0.6rem] uppercase tracking-[0.2em]">Mandate Enquiries: bruce@africaadvisory.com</span>
+              </a>
+            </div>
+          </motion.div>
+
+          {/* ── Right: Form ── */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-6"
+          >
+            {formState === 'sent' ? (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex flex-col items-start justify-center h-full gap-6 py-20 border border-[#00B4A6]/20 px-10 bg-white/[0.01]"
+              >
+                <div className="w-12 h-12 border border-[#00B4A6]/40 flex items-center justify-center">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M4 10L8 14L16 6" stroke="#00B4A6" strokeWidth="1.5" strokeLinecap="round"/>
                   </svg>
-               </div>
-               <p className="text-[0.6rem] opacity-40 uppercase tracking-[0.3em] font-medium leading-relaxed max-w-[240px] text-base-obsidian">
-                  FACILITATING OUTCOMES IN MARKETS REQUIRING SYSTEMIC NAVIGATION AND SOVEREIGN CONNECTIVITY SINCE 1984.
-               </p>
-            </div>
-          </footer>
+                </div>
+                <Display as="h3" className="text-white text-3xl">Mandate Submitted</Display>
+                <Body className="text-white/55 max-w-sm leading-relaxed">
+                  Confidential briefing received. A senior advisor will respond 
+                  within 24-48 business hours to discuss the institutional alignment.
+                </Body>
+                <button onClick={() => setFormState('idle')} className="text-[#00B4A6] text-[0.6rem] uppercase tracking-[0.25em] mt-4 hover:opacity-70 transition-opacity">
+                  ← Submit another enquiry
+                </button>
+              </motion.div>
+            ) : (
+              <div className="border border-white/10 p-8 lg:p-14 relative bg-white/[0.01]">
+                {/* Corner accents */}
+                <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-[#00B4A6]/60" />
+                <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-[#00B4A6]/60" />
+                <div className="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-[#00B4A6]/60" />
+                <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-[#00B4A6]/60" />
+
+                <div className="mb-10">
+                  <h3 className="font-display text-2xl text-white">Mandate Submission</h3>
+                </div>
+
+              <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+                {/* Name */}
+                <div className="flex flex-col gap-3">
+                  <label className="text-[0.48rem] tracking-[0.25em] text-white/35">Contact Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Full Name and Title"
+                    className="w-full bg-transparent border-b border-white/10 py-3 text-white text-sm focus:border-[#00B4A6]/60 outline-none transition-colors duration-300"
+                  />
+                </div>
+
+                {/* Institution */}
+                <div className="flex flex-col gap-3">
+                  <label className="text-[0.48rem] tracking-[0.25em] text-white/35">Institution</label>
+                  <input
+                    type="text"
+                    name="organisation"
+                    required
+                    value={formData.organisation}
+                    onChange={handleChange}
+                    placeholder="Ministry, DFI, or Corporate entity"
+                    className="w-full bg-transparent border-b border-white/10 py-3 text-white text-sm focus:border-[#00B4A6]/60 outline-none transition-colors duration-300"
+                  />
+                </div>
+
+                {/* Region of Interest */}
+                <div className="flex flex-col gap-3">
+                  <label htmlFor="mandate-region" className="text-[0.48rem] tracking-[0.25em] text-white/35">Region of Interest</label>
+                  <select
+                    id="mandate-region"
+                    name="mandate"
+                    value={formData.mandate}
+                    onChange={handleChange}
+                    className="w-full bg-transparent border-b border-white/10 py-3 text-white/80 text-sm focus:border-[#00B4A6]/60 outline-none transition-colors duration-300 appearance-none cursor-pointer"
+                  >
+                    <option value="" disabled>Select geographic sub-region</option>
+                    <option className="bg-[#0A0C10] text-white">SADC (Southern Africa)</option>
+                    <option className="bg-[#0A0C10] text-white">ECOWAS (West Africa)</option>
+                    <option className="bg-[#0A0C10] text-white">EAC (East Africa)</option>
+                    <option className="bg-[#0A0C10] text-white">International / Corridors</option>
+                  </select>
+                </div>
+
+                {/* Message */}
+                <div className="flex flex-col gap-3">
+                  <label className="text-[0.48rem] tracking-[0.25em] text-white/35">Mandate Brief</label>
+                  <textarea
+                    name="message"
+                    rows={5}
+                    required
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Preliminary mandate description and estimated transaction value..."
+                    className="w-full bg-transparent border-b border-white/10 py-3 text-white text-sm focus:border-[#00B4A6]/60 outline-none transition-colors duration-300 resize-none"
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <div className="mt-4">
+                  <button
+                    type="submit"
+                    disabled={formState === 'sending'}
+                    className="w-full py-5 bg-[#00B4A6] text-white font-bold text-[0.65rem] uppercase tracking-[0.4em] hover:bg-[#00D1C1] transition-all duration-300 disabled:opacity-60"
+                  >
+                    {formState === 'sending' ? 'Sending Brief...' : 'SEND ENQUIRY'}
+                  </button>
+                  <p className="text-[11px] text-white/30 mt-6 text-center italic leading-relaxed">
+                    All submissions are treated with strict professional confidentiality. An NDA is available on request.
+                  </p>
+                </div>
+              </form>
+              </div>
+            )}
+          </motion.div>
         </div>
       </div>
     </section>
-    <div className="h-32 bg-gradient-to-b from-transparent to-base-obsidian -mt-32 relative z-20 pointer-events-none" />
-  </>
   );
 };

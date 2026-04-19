@@ -12,6 +12,11 @@ const config: Config = {
         soil: "#4a3728",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        "base-obsidian": "hsl(216 12% 8%)",
+        "brand-teal": "#00B4A6",
+        forest: "hsl(var(--forest))",
+        sandstone: "hsl(var(--sandstone))",
+        jade: "hsl(var(--jade))",
       },
       fontFamily: {
         display: ["var(--font-display)"],

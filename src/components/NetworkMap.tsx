@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-
 const nodes = [
   { id: 'jhb', x: 550, y: 850, name: 'Johannesburg', region: 'ZA' },
   { id: 'nbi', x: 650, y: 550, name: 'Nairobi', region: 'KE' },
@@ -10,8 +9,6 @@ const nodes = [
   { id: 'szn', x: 850, y: 350, name: 'Shenzhen', region: 'CN' },
   { id: 'lag', x: 440, y: 530, name: 'Lagos', region: 'NG' },
 ];
-
-import { TRANSITIONS } from './Motion';
 
 export const NetworkMap = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -73,7 +70,7 @@ export const NetworkMap = () => {
           />
 
           {/* Nodes */}
-          {nodes.map((node) => (
+          {nodes.map((node, i) => (
             <g key={node.id}>
               <motion.circle 
                 cx={node.x} 
@@ -87,7 +84,7 @@ export const NetworkMap = () => {
                   duration: 8, 
                   repeat: Infinity, 
                   ease: "easeInOut",
-                  delay: Math.random() * 5
+                  delay: (i * 0.7) % 5
                 }}
                 className="fill-jade" 
               />

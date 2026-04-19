@@ -84,7 +84,7 @@ export const CorridorMap = () => {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="0.2"
-                className="pathway-line text-jade/10"
+                className="pathway-line text-[#00B4A6]/10"
                 strokeDasharray="1000"
                 strokeDashoffset="1000"
               />
@@ -98,18 +98,18 @@ export const CorridorMap = () => {
               cx={node.cx}
               cy={node.cy}
               r="4"
-              className="fill-jade shadow-[0_0_10px_rgba(40,90,92,0.8)]"
+              className="fill-[#00B4A6] shadow-[0_0_10px_rgba(0,180,166,0.8)]"
             />
             <circle
               cx={node.cx}
               cy={node.cy}
               r="12"
-              className="stroke-jade/30 fill-none"
+              className="stroke-[#00B4A6]/30 fill-none"
             />
           </g>
         ))}
       </svg>
-      <div className="absolute inset-x-0 h-px bg-gold/20 blur-sm animate-scan-y pointer-events-none" />
+      <div className="absolute inset-x-0 h-px bg-[#00B4A6]/20 blur-sm animate-scan-y pointer-events-none" />
     </div>
   );
 };

@@ -6,51 +6,35 @@ import { ServiceSection } from "@/components/ServiceSection";
 import { FounderNarrative } from "@/components/FounderNarrative";
 import { ContactCTA } from "@/components/ContactCTA";
 import { Footer } from "@/components/Footer";
-import { IntelligenceStrip } from "@/components/IntelligenceStrip";
 import { FAQ } from "@/components/FAQ";
-import { CinematicDivider } from "@/components/CinematicDivider";
-import { TickerBar } from "@/components/TickerBar";
 import { ArchitecturalGrid } from "@/components/ArchitecturalGrid";
 import { RevealManager } from "@/components/RevealManager";
-import { BriefingDivider } from "@/components/BriefingDivider";
+import { CredentialStrip } from "@/components/CredentialStrip";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-base-obsidian text-secondary-parchment relative">
+    <div className="flex flex-col min-h-screen relative overflow-x-hidden">
       <RevealManager />
       <ArchitecturalGrid />
       
-      <Hero />
+      <div className="dark-half relative z-10 scale-[1.001]">
+        <div className="reveal"><Hero /></div>
+        <div className="reveal reveal-delay-2"><TrustStrip /></div>
+        <div className="reveal"><SelectedMandates /></div>
+      </div>
       
-
+      <div className="relative z-20 transition-all duration-1000">
+        <div className="reveal"><ServiceSection /></div>
+        <div className="reveal"><HubGrid /></div>
+        <div className="reveal"><FAQ /></div>
+        <div className="reveal"><FounderNarrative /></div>
+        <div className="reveal"><ContactCTA /></div>
+      </div>
       
-      <IntelligenceStrip />
-      
-      <TrustStrip />
-      
-      <BriefingDivider label="SELECT CASE STUDIES" />
-      
-      <SelectedMandates />
-      
-      <BriefingDivider label="EXECUTION ARCHITECTURE" />
-      
-      <ServiceSection />
-      
-      <BriefingDivider label="REGIONAL CONNECTIVITY" />
-      
-      <HubGrid />
-      
-      <CinematicDivider />
-      
-      <FAQ />
-      
-      <FounderNarrative />
-      
-      <ContactCTA />
-      
-      <Footer />
-      
-      <TickerBar />
+      <div className="dark-half">
+        <div className="reveal"><CredentialStrip /></div>
+        <Footer />
+      </div>
     </div>
   );
 }

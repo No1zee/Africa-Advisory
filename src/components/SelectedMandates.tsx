@@ -1,178 +1,227 @@
 "use client";
 
-import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Display, Label, Tabular, Body, Sovereign } from './Typography';
-import { VARIANTS, TRANSITIONS } from './Motion';
-import { SpotlightBackground } from './SpotlightBackground';
-import { useGSAP } from '@gsap/react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { Display, Label } from './Typography';
 
 const MANDATES = [
   {
-    size: "$1.2B",
-    sector: "Energy & Infrastructure",
-    geography: "West Africa",
-    outcome: "Sovereign debt restructuring and emergency capital injection for state utility.",
-    year: "2024",
-    image: "/assets/spotlight-1.png"
+    tag: 'Energy & Infrastructure',
+    figure: '$1.2B',
+    figureEnd: 1.2,
+    figureSuffix: 'B',
+    format: 'project finance arranged',
+    outcome: 'Power generation infrastructure financing across francophone West Africa.',
+    geography: 'West Africa',
+    year: '2024',
+    proofPoint: 'Multi-tranche sovereign-backed facility — 4 DFI co-lenders',
   },
   {
-    size: "$820M",
-    sector: "Transport & Logistics",
-    geography: "East Africa",
-    outcome: "Financial close on Public-Private Partnership for regional rail corridor.",
-    year: "2023",
-    image: "/assets/spotlight-2.png"
+    tag: 'Trade Finance',
+    figure: '$450M',
+    figureEnd: 450,
+    figureSuffix: 'M',
+    format: 'structured capital',
+    outcome: 'Cross-border commodity trade financing facility bridging SADC and ECOWAS regions.',
+    geography: 'SADC · ECOWAS',
+    year: '2023',
+    proofPoint: 'Executed in under 90 days from mandate award to close',
   },
   {
-    size: "$450M",
-    sector: "Commodities & Trade",
-    geography: "Multi-Regional",
-    outcome: "Structured cross-border trade finance facility for agricultural exports.",
-    year: "2024",
-    image: "/assets/spotlight-3.png"
+    tag: 'Sovereign Debt',
+    figure: '$780M',
+    figureEnd: 780,
+    figureSuffix: 'M',
+    format: 'debt restructured',
+    outcome: 'Bilateral creditor debt resolution and restructuring advisory for East African sovereign.',
+    geography: 'East Africa',
+    year: '2023',
+    proofPoint: 'Coordinated across London and Paris Club frameworks',
   },
   {
-    size: "$150M",
-    sector: "ICT",
-    geography: "Pan-African",
-    outcome: "Debt financing for rapid deployment of high-speed telecommunications infrastructure.",
-    year: "2023",
-    image: "/assets/hero-bg.png"
-  }
+    tag: 'Capital Markets',
+    figure: '$320M',
+    figureEnd: 320,
+    figureSuffix: 'M',
+    format: 'bond programme',
+    outcome: 'Green bond origination and placement advisory for a pan-African development institution.',
+    geography: 'Pan-Africa',
+    year: '2024',
+    proofPoint: 'Listed simultaneously on the JSE and Luxembourg Stock Exchange',
+  },
 ];
 
-export const SelectedMandates = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const introRef = useRef<HTMLDivElement>(null);
-  const flashRef = useRef<HTMLDivElement>(null);
+const CONTAINER_VARIANTS = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } },
+};
 
-  useGSAP(() => {
-    // 1. Exit animation for the intro text - slowed down and more graceful
-    gsap.to(introRef.current, {
-      scrollTrigger: {
-        trigger: ".mandate-session-0",
-        start: "top 150%", // Start earlier due to buffer
-        end: "top 60%",
-        scrub: 1, // Higher scrub value for more "weight"
-      },
-      opacity: 0,
-      scale: 1.1,
-      filter: "blur(15px)",
-      y: -20,
-      ease: "power1.inOut"
-    });
+const CARD_VARIANTS = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' as const } },
+};
 
-    // 2. Softened Glow Transition (replaces violent flash)
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".mandate-session-0",
-        start: "top 120%", 
-        end: "top 40%",
-        scrub: 1.5,
-      }
-    });
+// Animated figure — counts up once on viewport entry
+function AnimatedFigure({ end, suffix, isDecimal }: { end: number; suffix: string; isDecimal?: boolean }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-5% 0px' });
+  const [val, setVal] = useState(0);
+  const started = useRef(false);
 
-    tl.to(flashRef.current, { 
-      opacity: 0.7, // Cap opacity for a 'softer' feel
-      duration: 0.5, 
-      ease: "power2.in" 
-    })
-    .to(flashRef.current, { 
-      opacity: 0, 
-      duration: 0.5, 
-      ease: "power2.out" 
-    });
-
-    // 3. Individual session reveal
-    const sections = gsap.utils.toArray('.mandate-session');
-    sections.forEach((section: any) => {
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top center",
-        onEnter: () => gsap.to(section, { opacity: 1, duration: 1 }),
-        onLeaveBack: () => gsap.to(section, { opacity: 0.5, duration: 1 }),
-      });
-    });
-  }, { scope: containerRef });
+  useEffect(() => {
+    if (!inView || started.current) return;
+    started.current = true;
+    const duration = 1400;
+    let start: number | null = null;
+    const tick = (ts: number) => {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const current = end * eased;
+      setVal(isDecimal ? Math.round(current * 10) / 10 : Math.round(current));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, [inView, end, isDecimal]);
 
   return (
-    <section id="mandates" ref={containerRef} className="bg-base-obsidian relative">
-      {/* Softened Transition Glow */}
-      <div 
-        ref={flashRef}
-        className="fixed inset-0 bg-secondary-parchment/60 pointer-events-none z-[100] opacity-0 backdrop-blur-sm"
-      />
+    <span ref={ref}>
+      ${isDecimal ? val.toFixed(1) : val}{suffix}
+    </span>
+  );
+}
 
-      <div 
-        ref={introRef}
-        className="sticky top-0 h-screen w-full flex flex-col items-center justify-center pointer-events-none z-20"
-      >
-        <div className="container px-6 text-center">
-            <Display className="text-3xl md:text-5xl lg:text-6xl text-secondary-parchment leading-tight">
-                Africa Advisory,<br className="hidden md:block" /> Africa's Dealmaker
+export const SelectedMandates = () => {
+  return (
+    <section id="mandates" className="relative py-28 lg:py-40 bg-[hsl(216_12%_8%)] overflow-hidden">
+      {/* Ambient glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[#00B4A6]/[0.04] rounded-full blur-[120px] pointer-events-none" />
+
+      {/* Section Header */}
+      <div className="container mb-16">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <Label className="text-[#00B4A6] tracking-[0.4em] text-[0.6rem] mb-4 block text-left">
+              Selected Mandates
+            </Label>
+            <Display as="h2" className="text-white text-4xl md:text-5xl lg:text-6xl leading-[1.1] max-w-xl text-left font-medium">
+              Significant Operations<br />
+              <span className="italic font-light text-white/40 font-serif">Across the Continent</span>
             </Display>
-            <motion.div 
-              initial={{ width: 0 }}
-              whileInView={{ width: 120 }}
-              transition={{ duration: 1, delay: 0.5 }}
-              className="h-[1px] bg-brand-teal/40 mx-auto mt-12"
-            />
-        </div>
-      </div>
+          </motion.div>
 
-      {/* Transition Buffer to make user scroll slightly longer */}
-      <div className="h-[60vh] md:h-[80vh] pointer-events-none" />
-
-      {MANDATES.map((mandate, i) => (
-        <div 
-          key={i} 
-          className={`mandate-session mandate-session-${i} relative min-h-screen flex items-center justify-center overflow-hidden border-t border-white/5`}
-        >
-          <SpotlightBackground 
-            image={mandate.image} 
-            active={true} 
-            opacity={0.5}
-            blur={10}
-          />
-          
-          <div className="container relative z-10 px-6 grid grid-cols-12 gap-8">
-            <div className="col-span-12 md:col-start-3 md:col-span-8 lg:col-start-4 lg:col-span-6 flex flex-col items-center text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ margin: "-20%" }}
-                transition={TRANSITIONS.EXQUISITE}
+          <div className="flex flex-col items-start lg:items-end gap-6 h-full">
+              <motion.a
+                href="#contact"
+                whileHover={{ x: 4 }}
+                className="flex items-center gap-3 text-[#00B4A6] text-[0.7rem] uppercase tracking-[0.25em] font-bold group shrink-0"
               >
-                <div className="mb-8 flex flex-col items-center">
-                    <Tabular className="text-5xl md:text-7xl lg:text-9xl text-gold mb-2 [text-shadow:0_4px_12px_rgba(0,0,0,0.8)] mask-reveal">
-                        {mandate.size}
-                    </Tabular>
-                    <Sovereign className="text-brand-teal tracking-[0.5em] [text-shadow:0_1px_8px_rgba(0,0,0,0.8)]">{mandate.sector}</Sovereign>
-                </div>
-                
-                <Body className="text-lg md:text-xl lg:text-2xl text-secondary-parchment/90 mb-10 leading-relaxed max-w-2xl">
-                  {mandate.outcome}
-                </Body>
+                Request Mandate Inventory
+                <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+              </motion.a>
 
-                <div className="flex items-center justify-center gap-6 opacity-40">
-                    <Label>{mandate.geography}</Label>
-                    <div className="w-1 h-1 bg-jade rounded-full" />
-                    <Label>{mandate.year}</Label>
-                </div>
-              </motion.div>
-            </div>
+              {/* Filter Chips */}
+              <div className="flex flex-wrap gap-2 pt-2">
+                {['All', 'Energy', 'Sovereign', 'Trade', 'Capital Markets'].map((filter) => (
+                  <span 
+                    key={filter} 
+                    className={`px-3 py-1 text-[0.55rem] uppercase tracking-widest border border-white/10 text-white/40 cursor-default hover:border-[#00B4A6]/40 hover:text-white/80 transition-all duration-300 ${filter === 'All' ? 'border-[#00B4A6]/40 text-white' : ''}`}
+                  >
+                    {filter}
+                  </span>
+                ))}
+              </div>
           </div>
         </div>
-      ))}
-
-      {/* Rhythmic Closer */}
-      <div className="h-[50vh] flex items-center justify-center bg-gradient-to-b from-transparent to-base-obsidian">
       </div>
+
+      {/* 2×2 Card Grid */}
+      <div className="container">
+        <motion.div
+          variants={CONTAINER_VARIANTS}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/[0.06] border border-white/[0.06]"
+        >
+          {MANDATES.map((mandate, i) => (
+            <motion.div
+              key={i}
+              variants={CARD_VARIANTS}
+              className="mandate-scan group relative flex flex-col p-8 lg:p-12 bg-[hsl(216_12%_8%)] hover:bg-white/[0.01] transition-all duration-500 cursor-default overflow-hidden"
+            >
+              {/* Detailed Meta Strip */}
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-8 border-b border-white/[0.05] pb-6">
+                <div className="flex items-center gap-4">
+                  <span className="text-[0.52rem] tracking-[0.3em] text-[#00B4A6] font-bold">
+                    {mandate.tag}
+                  </span>
+                  <div className="w-1 h-1 rounded-full bg-white/20" />
+                  <span className="text-[0.52rem] tracking-[0.2em] text-white/40">
+                    {mandate.geography}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] tracking-widest border border-[#00B4A6]/20 text-[#00B4A6]/60 px-2 py-0.5 rounded-full bg-[#00B4A6]/[0.02]">
+                    Success
+                  </span>
+                  <span className="text-[0.52rem] tracking-[0.2em] text-white/30 font-mono">
+                    {mandate.year}
+                  </span>
+                </div>
+              </div>
+
+              {/* Animated Figure */}
+              <div className="mb-6">
+                <p className="font-display text-5xl md:text-6xl lg:text-[4.5rem] font-bold tracking-tight text-white leading-[0.85]">
+                  <AnimatedFigure
+                    end={mandate.figureEnd}
+                    suffix={mandate.figureSuffix}
+                    isDecimal={mandate.figureEnd < 10}
+                  />
+                  <span className="text-[#00B4A6]/80 text-[0.58rem] tracking-[0.3em] ml-4 font-semibold align-middle">
+                    — {mandate.format}
+                  </span>
+                </p>
+              </div>
+
+              {/* Outcome */}
+              <p className="text-white/60 text-sm leading-relaxed mb-8 max-w-sm">
+                {mandate.outcome}
+              </p>
+
+              {/* Proof Point */}
+              <div className="mt-auto pt-6 border-t border-white/[0.05]">
+                 <ul className="flex flex-col gap-2">
+                   <li className="flex items-start gap-3">
+                     <span className="text-[0.68rem] text-white/40 leading-relaxed tracking-widest font-mono">
+                       {mandate.proofPoint}
+                     </span>
+                   </li>
+                 </ul>
+              </div>
+
+              {/* Hover background highlight */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#00B4A6]/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Bottom spacer accent line */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+        style={{ transformOrigin: 'left center' }}
+        className="container mt-20 h-px bg-gradient-to-r from-[#00B4A6]/30 via-white/5 to-transparent"
+      />
     </section>
   );
 };

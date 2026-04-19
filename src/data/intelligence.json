@@ -1,0 +1,15 @@
+{
+  "tickerStats": [
+    { "label": "Structured Capital", "value": "$4.2B+" },
+    { "label": "Regulated Hubs", "value": "12" },
+    { "label": "Pan-African Coverage", "value": "54 Nations" },
+    { "label": "Established Expertise", "value": "40 Years" }
+  ],
+  "mandates": [
+    { "label": "Energy & Sovereign Debt", "value": "$1.2B" },
+    { "label": "Trade Corridor Projects", "value": "$450M" },
+    { "label": "Infrastructure Development", "value": "$820M" },
+    { "label": "Agri-Tech & Growth", "value": "$120M" },
+    { "label": "Regional Transit", "value": "$2.1B" }
+  ]
+}

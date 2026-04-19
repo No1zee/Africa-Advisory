@@ -2,169 +2,151 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
-import { Display, Body, Label, Tabular } from './Typography';
-import { PretextHeader } from './PretextHeader';
-import { VARIANTS, TRANSITIONS } from './Motion';
+import { Display, Label, Body } from './Typography';
 
-const PILLARS = [
+const SERVICES = [
   {
-    id: '01',
+    index: 0,
     title: 'Project Finance',
-    tagline: 'Infrastructure Development',
-    description: 'Project finance is key to infrastructure development in Africa. Areas of specialisation include mining, energy, transport, telecommunications and infrastructure.',
-    metric: 'MINING & ENERGY'
+    description: 'Structuring and arranging long-term financing for capital-intensive infrastructure projects across African markets.',
+    sector: 'Infrastructure · Energy',
+    proofPoint: 'Average ticket size $150M+',
   },
   {
-    id: '02',
-    title: 'Export And Pre-Export Finance',
-    tagline: 'Finance Facilitation',
-    description: 'End-to-end finance facilitation that covers all bases from point of production to delivery at destination. Access to blue-chip financial facilities and longstanding, continent-wide relationships.',
-    metric: 'TRADE & CAPITAL'
+    index: 1,
+    title: 'Trade Finance',
+    description: 'Specialist advice on cross-border trade finance facilities, supply chain financing, and commodity-backed instruments.',
+    sector: 'Trade · Commodities',
+    proofPoint: '12 regulated market access points',
   },
   {
-    id: '03',
-    title: 'Debt Resolution',
-    tagline: 'Negotiated Solutions',
-    description: 'Africa Advisory is well positioned to negotiate solutions for external creditors and suppliers.',
-    metric: 'SECURED DEBT'
+    index: 2,
+    title: 'Sovereign Debt Advisory',
+    description: 'Expert counsel on national debt sustainability, multi-creditor negotiations (Paris & London Club), and fiscal restructuring frameworks for African sovereigns.',
+    sector: 'Sovereign · G2G · DFI',
+    proofPoint: 'Trusted advisor to 4+ Ministry of Finance offices',
   },
   {
-    id: '04',
-    title: 'Entrepreneurial Development',
-    tagline: 'SME Initiatives',
-    description: 'We believe that the future of business development lies with the development of entrepreneurs. In association with EBN Africa, Africa Advisory supports developing incubators focused on SME initiatives.',
-    metric: 'SCALE & EXIT'
+    index: 3,
+    title: 'Capital Markets',
+    description: 'Lead-facilitation for international bond issuances, Sukuk structures, and local currency instruments for emerging African corporate champions.',
+    sector: 'Bonds · Sukuk · Primary Markets',
+    proofPoint: 'Dual-listed green bond precedent',
   },
   {
-    id: '05',
-    title: 'Crowdfunding',
-    tagline: 'Socially Beneficial',
-    description: 'Africa Advisory has established a Crowd Funding platform linked into major European platforms. The focus is development of socially beneficial SME development.',
-    metric: 'LIQUIDITY FLOW'
+    index: 4,
+    title: 'Strategic Advisory',
+    description: 'C-suite and Ministerial-level insight on market entry, multi-jurisdictional risk mitigation, and high-impact transaction architecture.',
+    sector: 'Executive · Ministerial',
+    proofPoint: 'British Government Advisory Committee member',
   },
   {
-    id: '06',
-    title: 'Virtual Offices',
-    tagline: 'Regional Presence',
-    description: 'Africa Advisory is able to host a virtual office in one or more of its regional hubs.',
-    metric: 'FOOTPRINT'
-  }
+    index: 5,
+    title: 'Eastern Capital Corridors',
+    description: 'Strategic facilitation bridging Asian institutional liquidity with large-scale African infrastructure and industrial project pipelines.',
+    sector: 'China · India · GCC · Africa',
+    proofPoint: 'Facilitated $850M+ in bilateral capital flow',
+  },
 ];
 
 export const ServiceSection = () => {
   return (
-    <section data-nav-light="true" className="section bg-[#F8F6F3] border-t border-black/5 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.05] pointer-events-none grayscale mix-blend-multiply">
-        <Image 
-          src="/assets/service.png" 
-          alt="Infrastructure Background" 
-          fill
-          className="object-cover"
-          sizes="100vw"
-        />
-      </div>
+    <section id="services" className="relative py-28 lg:py-40 bg-[#F5F1EB]" data-nav-light="true">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none grayscale" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/pinstriped-suit.png')" }} />
       
-      {/* Noise Reduction Gradient */}
-      <div className="absolute inset-x-0 top-0 h-96 bg-gradient-to-b from-[#F8F6F3] via-[#F8F6F3]/80 to-transparent pointer-events-none z-0" />
-
       <div className="container relative z-10">
-        <motion.div 
-          variants={VARIANTS.STAGGER_CONTAINER}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="editorial-grid mb-24"
-        >
-          <div className="col-span-12 md:col-span-6">
-            <motion.div variants={VARIANTS.RISE_REVEAL}>
-              <Label className="text-brand-teal mb-8 uppercase tracking-[0.2em] font-semibold">Our Focus</Label>
-            </motion.div>
-            <motion.div 
-              variants={VARIANTS.RISE_REVEAL} 
-              transition={{ delay: 0.2 }}
-              className="mask-reveal"
+        {/* Section Header */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20 items-end">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <Label className="text-[#00B4A6] tracking-[0.4em] text-[0.6rem] mb-4 block">
+              Advisory Pillars
+            </Label>
+            <Display as="h2" className="text-[hsl(216_12%_10%)] text-4xl md:text-5xl lg:text-6xl leading-tight">
+              Six Disciplines.<br />
+              <span className="italic font-light text-[hsl(216_12%_35%)]">One Unified Platform.</span>
+            </Display>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <Body className="text-[hsl(216_12%_35%)] text-base leading-relaxed max-w-xl italic border-l border-[#00B4A6]/60 pl-6">
+              Africa Advisory provides a multi-disciplinary bridge between global capital 
+              and African opportunity. We deliver institutional-grade mandates where 
+              traditional banking frameworks often fall short.
+            </Body>
+          </motion.div>
+        </div>
+
+        {/* 3×2 Service Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[hsl(216_12%_10%)]/10 border border-[hsl(216_12%_10%)]/10 shadow-2xl shadow-black/5">
+          {SERVICES.map((service, i) => (
+            <motion.div
+              key={service.index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.08 }}
+              whileHover={{ y: -8, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } }}
+              className="group relative bg-[#F5F1EB] p-8 lg:p-12 hover:bg-white transition-all duration-500 cursor-default overflow-hidden"
             >
-              <PretextHeader 
-                text="Trade and Project Finance Advisory."
-                fontSize={64}
-                color="#0D1212"
-                maxWidth={600}
-                lineHeight={1.1}
-              />
-            </motion.div>
-          </div>
-          <div className="col-span-12 md:col-start-8 md:col-span-5 flex items-end">
-            <motion.div variants={VARIANTS.RISE_REVEAL} transition={{ delay: 0.4 }}>
-              <Body className="text-[#0D1212]">
-                We provide the project infrastructure for complex mandates. Our approach is defined by market experience and a commitment to unlocking significant value across the continent.
-              </Body>
-            </motion.div>
-          </div>
-        </motion.div>
-
-        <div className="editorial-grid gap-12">
-          {PILLARS.map((pillar, i) => (
-            <motion.div 
-              key={pillar.id}
-              variants={VARIANTS.MASK_WIPE_V}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: i * 0.1, ...TRANSITIONS.EXQUISITE }}
-              className="col-span-12 md:col-span-6 lg:col-span-4 group reveal"
-            >
-              <div className="relative p-12 bg-white hover:bg-[#FDFCFB] border border-black/5 hover:border-brand-teal/20 transition-all duration-700 h-full flex flex-col justify-between overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.02)]">
-                {/* Glass Sheen */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                  <div className="absolute top-[-100%] left-[-100%] w-[300%] h-[300%] bg-[linear-gradient(45deg,transparent_25%,hsla(var(--jade),0.05)_50%,transparent_75%)] animate-[scanline_3s_infinite]" />
-                </div>
-
-                <div className="relative z-10">
-                  <div className="flex justify-between items-start mb-12">
-                    <motion.div
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: (i * 0.1) + 0.5 }}
-                      className="flex flex-col gap-1"
-                    >
-                      <Label className="text-brand-teal tracking-[0.3em] font-bold uppercase text-[0.65rem]">
-                        {pillar.tagline}
-                      </Label>
-                    </motion.div>
-                    <div className="w-8 h-px bg-jade/30 group-hover:w-12 transition-all duration-700" />
-                  </div>
-                  
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: (i * 0.1) + 0.6 }}
-                  >
-                    <Display as="h3" className="text-2xl mb-6 group-hover:text-brand-teal transition-colors duration-500 text-[#0D1212]">
-                      {pillar.title}
-                    </Display>
-                  </motion.div>
-                  
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: (i * 0.1) + 0.8 }}
-                  >
-                    <Body className="text-foreground mb-12 text-base leading-relaxed transition-colors">
-                      {pillar.description}
-                    </Body>
-                  </motion.div>
-                </div>
-
-                <div className="relative z-10 flex justify-between items-end border-t border-black/10 pt-8">
-                  <Tabular className="text-[0.65rem] text-brand-gold font-bold uppercase tracking-widest">{pillar.metric}</Tabular>
-                  <Label className="text-[0.65rem] text-brand-teal font-bold uppercase group-hover:text-brand-teal transition-colors tracking-widest">Execution Detail</Label>
-                </div>
-
-                <div className="absolute -bottom-8 -right-8 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity">
-                  <Tabular className="text-[10rem] font-bold text-[#0D1212]">{pillar.id}</Tabular>
-                </div>
+              {/* Institutional index with pulse */}
+              <div className="flex items-center justify-between mb-8">
+                <motion.span 
+                  whileHover={{ scale: 1.1, color: '#00B4A6' }}
+                  className="text-[0.65rem] font-mono text-[#00B4A6]/60 border-b border-[#00B4A6]/20 pb-1 font-bold"
+                >
+                  {String(service.index + 1).padStart(2, '0')}
+                </motion.span>
+                <div className="w-1 h-1 rounded-full bg-[#00B4A6]/20 group-hover:bg-[#00B4A6] group-hover:scale-150 transition-all duration-500" />
               </div>
+
+              {/* Sector Tag Reveal */}
+              <div className="h-6 overflow-hidden mb-2">
+                <motion.p 
+                  initial={{ y: 20, opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.3 + i * 0.05 }}
+                  className="text-[0.45rem] tracking-[0.3em] uppercase text-[#00B4A6] font-black"
+                >
+                  {service.sector}
+                </motion.p>
+              </div>
+
+              {/* Content */}
+              <h3 className="font-display text-2xl font-bold text-[hsl(216_12%_10%)] mb-4 tracking-tight group-hover:text-[#00B4A6] transition-colors duration-400">
+                {service.title}
+              </h3>
+              
+              <p className="text-[hsl(216_12%_40%)] text-[0.85rem] leading-[1.8] mb-10 flex-1 opacity-80 group-hover:opacity-100 transition-opacity">
+                {service.description}
+              </p>
+
+              {/* Metric strip surfaced at bottom */}
+              <div className="pt-6 border-t border-[hsl(216_12%_10%)]/5 flex items-center justify-between">
+                <span className="text-[#00B4A6] text-[0.55rem] uppercase tracking-[0.25em] font-black block">
+                  {service.proofPoint}
+                </span>
+                <span className="text-[0.7rem] text-[#00B4A6]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500">→</span>
+              </div>
+
+              {/* Hover teal corner accent */}
+              <div className="absolute top-0 right-0 w-12 h-12 opacity-0 group-hover:opacity-100 transition-all duration-700 pointer-events-none">
+                <div className="absolute top-0 right-0 w-full h-[1px] bg-[#00B4A6]/20 scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-right" />
+                <div className="absolute top-0 right-0 w-[1px] h-full bg-[#00B4A6]/20 scale-y-0 group-hover:scale-y-100 transition-transform duration-700 origin-top" />
+              </div>
+              
+              {/* Subtle bottom gradient glow */}
+              <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-[#00B4A6]/10 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
             </motion.div>
           ))}
         </div>

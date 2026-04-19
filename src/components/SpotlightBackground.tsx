@@ -30,11 +30,13 @@ export const SpotlightBackground: React.FC<Props> = ({
           className="absolute inset-0 z-0 pointer-events-none overflow-hidden"
         >
           {image && (
-            <img 
+            <Image 
               src={image} 
               alt="Contextual Background" 
-              className="absolute inset-0 w-full h-full object-cover scale-110" 
-              loading="lazy"
+              fill
+              sizes="100vw"
+              className="object-cover scale-110" 
+              priority={false}
             />
           )}
           <div className="absolute inset-0 bg-base-obsidian/40 mix-blend-multiply" />
